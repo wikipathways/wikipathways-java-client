@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wikipathways</groupId>
     <artifactId>webservice.api.lib</artifactId>
-    <version>3.3.0-GPMLRDF-3</version>
+    <version>3.4.0</version>
 
     <name>Java library for WikiPathways webservice</name>
     <packaging>bundle</packaging>
@@ -24,9 +24,9 @@
             <version>5.9.1</version>
             <scope>test</scope>
         </dependency>
-	    <dependency> 
-            <groupId>org.bridgedb</groupId> 
-            <artifactId>org.bridgedb.bio</artifactId> 
+	    <dependency>
+            <groupId>org.bridgedb</groupId>
+            <artifactId>org.bridgedb.bio</artifactId>
            <version>3.0.22</version>
         </dependency>
         <dependency>
@@ -99,7 +99,7 @@
                     <instructions>
                         <Bundle-Name>org.wikipathways.webservice.api</Bundle-Name>
                         <Bundle-SymbolicName>org.wikipathways.webservice.api</Bundle-SymbolicName>
-                        <Bundle-Version>3.3.0</Bundle-Version>
+                        <Bundle-Version>3.4.0</Bundle-Version>
                         <Export-Package>org.pathvisio.wikipathways.webservice,org.wikipathways.client, org.wikipathways.client.utils}</Export-Package>
                         <Require-Bundle>org.pathvisio.core,org.bridgedb,org.bridgedb.bio,com.springsource.org.jdom,org.apache.commons.codec,org.apache.commons.io,org.apache.commons.logging</Require-Bundle>
                     </instructions>
