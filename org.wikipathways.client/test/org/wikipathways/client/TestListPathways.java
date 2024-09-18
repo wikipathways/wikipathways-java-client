@@ -15,22 +15,23 @@
 //
 package org.wikipathways.client;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
+import org.bridgedb.bio.Organism;
 import org.junit.Before;
 import org.junit.Test;
+import org.pathvisio.wikipathways.webservice.WSPathwayInfo;
 import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
- * JUnit Test for webservice function: listOrganism
+ * JUnit Test for webservice function: listPathways
  * @author mkutmon
  */
-public class TestListOrganisms {
+public class TestListPathways {
 
 	private WikiPathwaysClient client;
 	
@@ -41,11 +42,12 @@ public class TestListOrganisms {
 
 	@Test
 	public void test() throws RemoteException {
-		String [] orgs = client.listOrganisms();
-        System.out.println(orgs);
-		assertTrue(orgs.length >= 27);
+		WSPathwayInfo [] info = client.listPathways();
+		assertTrue(info.length > 1900);
 			
-		List<String> list = new ArrayList<String>(Arrays.asList(orgs));
-		assertTrue(list.contains("Homo sapiens"));
+		WSPathwayInfo [] info2 = client.listPathways(Organism.HomoSapiens);
+		assertTrue(info2.length < info.length);
+		assertFalse(info.length == info2.length);
 	}
+
 }

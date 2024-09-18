@@ -16,11 +16,16 @@
 
 package org.pathvisio.wikipathways.webservice;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URLEncoder;
+import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +46,9 @@ import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 import org.wikipathways.client.utils.Utils;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * connects to the new WikiPathways REST
  * webservice 
@@ -51,6 +59,7 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 
 	private HttpClient client;
 	private String baseUrl;
+	private String BASE_URL_JSON = "https://www.wikipathways.org/json/";
 
 	public WikiPathwaysRESTBindingStub(HttpClient client, String baseUrl) {
 		this.client = client;
@@ -396,44 +405,62 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 	
 	@Override
 	public String[] listOrganisms() throws RemoteException {
-		String url = baseUrl + "/listOrganisms";
-		try {
-			Document jdomDocument = Utils.connect(url, client);
-			Element root = jdomDocument.getRootElement();
-			List<Element> list = root.getChildren();
-			String[] organisms = new String[list.size()];
-			for (int i = 0; i < list.size(); i++) {
-				organisms[i] = list.get(i).getValue();
-			}
-			return organisms;
-		} catch (Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
-		}
-	}
+    try {
+        String jsonString = jsonGet(BASE_URL_JSON+ "listOrganisms.json");
+
+        JSONObject jsonObject = new JSONObject(jsonString);
+        JSONArray organismArray = jsonObject.getJSONArray("organisms");
+
+        String[] organisms = new String[organismArray.length()];
+        for (int i = 0; i < organismArray.length(); i++) {
+            organisms[i] = organismArray.getString(i);
+        }
+        return organisms;
+    } catch (Exception e) {
+        throw new RemoteException("Error while processing listOrganisms: " + e.getMessage(), e);
+    }
+}
+
 	
-	@Override
-	public WSPathwayInfo[] listPathways(String organism) throws RemoteException {
-		String url = "";
-		if (organism == null) {
-			url = baseUrl + "/listPathways";
-		} else {
-			organism = organism.replace(" ", "+");
-			url = baseUrl + "/listPathways?organism=" + organism;
-		}
-		try {
-			Document jdomDocument = Utils.connect(url, client);
-			Element root = jdomDocument.getRootElement();
-			List<Element> list = root.getChildren("pathways", WSNamespaces.NS1);
-			WSPathwayInfo [] info = new WSPathwayInfo[list.size()];
-			for (int i = 0; i < list.size(); i++) {
-				info[i] = Utils.parseWSPathwayInfo(list.get(i));
-			}
-			return info;
-		} catch (Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
-		}
-	}
-	
+@Override
+public WSPathwayInfo[] listPathways(String organism) throws RemoteException {    
+    try {
+        String jsonString = jsonGet(BASE_URL_JSON+ "listPathways.json");
+
+        JSONObject jsonObject = new JSONObject(jsonString);
+        JSONArray organismsArray = jsonObject.getJSONArray("organisms");
+
+        List<WSPathwayInfo> pathwayInfoList = new ArrayList<>();
+
+        for (int i = 0; i < organismsArray.length(); i++) {
+            JSONObject organismObj = organismsArray.getJSONObject(i);
+            JSONArray pathwaysArray = organismObj.getJSONArray("pathways");
+
+            for (int j = 0; j < pathwaysArray.length(); j++) {
+                JSONObject pathwayObj = pathwaysArray.getJSONObject(j);
+
+                String id = pathwayObj.getString("id");
+                String name = pathwayObj.getString("name");
+                String species = pathwayObj.getString("species");
+                String urlPath = pathwayObj.getString("url");
+                String revision = pathwayObj.getString("revision");
+
+                if (organism == null || organism.isEmpty() || species.equalsIgnoreCase(organism)) {
+                    WSPathwayInfo pathwayInfo = new WSPathwayInfo(id, urlPath, name, species, revision);
+                    pathwayInfoList.add(pathwayInfo);
+                }
+            }
+        }
+
+        // Convert the list to an array and return it
+        return pathwayInfoList.toArray(new WSPathwayInfo[0]);
+    } catch (Exception e) {
+        // Handle exceptions and wrap them in a RemoteException
+        throw new RemoteException("Error while processing listPathways: " + e.getMessage(), e);
+    }
+}
+
+
 	@Override
 	public String login(String name, String pass) throws RemoteException {
 		try {
@@ -575,4 +602,20 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			throw new RemoteException(e.getMessage(), e.getCause());
 		}
 	}
+
+	 private String jsonGet(String urlString) throws Exception {
+        URL url = new URL(urlString);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String inputLine;
+        StringBuilder content = new StringBuilder();
+        while ((inputLine = in.readLine()) != null) {
+            content.append(inputLine);
+        }
+        in.close();
+        conn.disconnect();
+        return content.toString();
+    }
+
 }
