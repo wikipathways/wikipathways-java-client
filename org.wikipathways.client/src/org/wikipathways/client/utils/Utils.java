@@ -149,16 +149,6 @@ public class Utils {
 		return ontTerm;
 	}
 	
-	public static WSPathway parsePathway(Element pathway) throws UnsupportedEncodingException {
-		String gpml = new String(Base64.decodeBase64(pathway.getChildText("gpml", WSNamespaces.NS2)), "UTF-8");
-		String id = pathway.getChildText("id", WSNamespaces.NS2);
-		String name = pathway.getChildText("name", WSNamespaces.NS2);
-		String url = pathway.getChildText("url", WSNamespaces.NS2);
-		String species = pathway.getChildText("species", WSNamespaces.NS2);
-		String revision = pathway.getChildText("revision", WSNamespaces.NS2);
-		WSPathway p = new WSPathway(gpml, id, url, name, species, revision);
-		return p;
-	}
 	
 	public static WSPathwayHistory parsePathwayHistory(Element hist) {
 		String id = hist.getChildText("id", WSNamespaces.NS2);

@@ -43,7 +43,10 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 import org.wikipathways.client.utils.Utils;
 
 import org.json.JSONArray;
@@ -60,6 +63,8 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 	private HttpClient client;
 	private String baseUrl;
 	private String BASE_URL_JSON = "https://www.wikipathways.org/json/";
+	private String BASE_ASSETS = "https://www.wikipathways.org/wikipathways-assets/pathways/";
+
 
 	public WikiPathwaysRESTBindingStub(HttpClient client, String baseUrl) {
 		this.client = client;
@@ -248,17 +253,29 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 	
 	@Override
 	public WSPathway getPathway(String pwId, int revision) throws RemoteException {
-		String url = baseUrl + "/getPathway?pwId=" + pwId;
-		if(revision != 0) {
-			url = url + "&revision=" + revision;
-		}
+		String url = BASE_ASSETS + pwId + "/" + pwId + ".gpml";
 		try {
 			Document jdomDocument = Utils.connect(url, client);
-			Element root = jdomDocument.getRootElement();
-			Element p = root.getChild("pathway", WSNamespaces.NS1);
-			return Utils.parsePathway(p);
+			Element root = jdomDocument.getRootElement();  
+
+			String name = root.getAttributeValue("Name");       
+			String organism = root.getAttributeValue("Organism");
+			String version = root.getAttributeValue("Version");
+
+			String[] versionParts = version.split("_");
+			String wpId = versionParts[0];  
+			String revisionId = versionParts[1].substring(1);
+			String pathwayUrl = "https://www.wikipathways.org/pathways/" + wpId + ".html";
+
+			XMLOutputter xmlOutputter = new XMLOutputter(Format.getRawFormat());
+			String gpml = xmlOutputter.outputString(root);
+						
+			WSPathway wp = new WSPathway(gpml, wpId, pathwayUrl, name, organism, revisionId);
+			return wp;
+	
 		} catch (Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
+			e.printStackTrace();
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e);
 		}
 	}
 
