@@ -86,14 +86,4 @@ public class WSPathway {
     public void setRevision(String revision) {
         this.revision = revision;
     }
-
-    public String getOrganism() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getOrganism'");
-    }
-
-    public String getDataSource() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDataSource'");
-    }
 }
