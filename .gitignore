@@ -18,6 +18,16 @@
 *.ear
 *.zip
 *.tar.gz
+
+.settings
+.metadata
+*.class
+examples/lib/
+build/
+org.wikipathways.webservice.api.lib.jar
+org.wikipathways.webservice.api.bundle.jar
+user.properties
+org.wikipathways.client/resources/test/
 *.rar
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
