@@ -43,6 +43,7 @@ import org.pathvisio.wikipathways.webservice.WSPathway;
 import org.pathvisio.wikipathways.webservice.WSPathwayHistory;
 import org.pathvisio.wikipathways.webservice.WSPathwayInfo;
 import org.pathvisio.wikipathways.webservice.WSSearchResult;
+import org.pathvisio.wikipathways.webservice.WSSearchResultLiterature;
 import org.pathvisio.wikipathways.webservice.WSSearchResultXref;
 import org.pathvisio.wikipathways.webservice.WSSearchResultText;
 import org.pathvisio.wikipathways.webservice.WikiPathwaysPortType;
@@ -279,9 +280,9 @@ public class WikiPathwaysClient {
 	/**
 	 * search by literature reference
 	 */
-	public WSSearchResult[] findPathwaysByLiterature(String query) throws RemoteException {
-		WSSearchResult[] r = port.findPathwaysByLiterature(query);
-		if(r == null) r = new WSSearchResult[0];
+	public WSSearchResultLiterature[] findPathwaysByLiterature(String query) throws RemoteException {
+		WSSearchResultLiterature[] r = port.findPathwaysByLiterature(query);
+		if(r == null) r = new WSSearchResultLiterature[0];
 		return r;        
 	}
 

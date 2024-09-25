@@ -92,23 +92,90 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 	}
 	
 	@Override
-	public WSSearchResult[] findPathwaysByLiterature(String query)
-			throws RemoteException {
-		query = query.replace(" ", "+");
-		String url = baseUrl + "/findPathwaysByLiterature?query=" + query;
-		try {
-			Document jdomDocument = Utils.connect(url, client);
-			Element root = jdomDocument.getRootElement();
-			List<Element> list = root.getChildren("result", WSNamespaces.NS1);
-			WSSearchResult [] res = new WSSearchResult[list.size()];
-			for (int i = 0; i < list.size(); i++) {
-				res[i] = Utils.parseWSSearchResult(list.get(i));
-			}
-			return res;
-		} catch (Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
-		}
-	}
+    public WSSearchResultLiterature[] findPathwaysByLiterature(String query) throws RemoteException {
+        if (query == null || query.isEmpty()) {
+            throw new RemoteException("Must provide a query, e.g., 15134803, Schwartz GL, or Eur J Pharmacol");
+        }
+
+        String url = BASE_URL_JSON + "findPathwaysByLiterature.json";
+
+        try {
+            String jsonResponse = Utils.downloadFile(url);
+
+            JSONObject jsonObject = new JSONObject(jsonResponse);
+            JSONArray pathwayInfoArray = jsonObject.getJSONArray("pathwayInfo");
+
+            List<WSSearchResultLiterature> filteredResults = new ArrayList<>();
+
+            for (int i = 0; i < pathwayInfoArray.length(); i++) {
+                JSONObject pathwayInfo = pathwayInfoArray.getJSONObject(i);
+
+                String id = pathwayInfo.optString("id", null);
+                String urlPathway = pathwayInfo.optString("url", null);
+                String name = pathwayInfo.optString("name", null);
+                String species = pathwayInfo.optString("species", null);
+                String revision = pathwayInfo.optString("revision", null);
+                String authors = pathwayInfo.optString("authors", null);
+                String description = pathwayInfo.optString("description", null);
+                String refs = pathwayInfo.optString("refs", null);
+                String citationsString = pathwayInfo.optString("citations", null);  // Citations as a string
+
+                String[] citations = parseCitationsFromString(citationsString);
+
+                if (matchesQuery(query, id, urlPathway, name, species, revision, authors, description, refs, citations)) {
+                    WSSearchResultLiterature result = new WSSearchResultLiterature(id, urlPathway, name, species, revision, authors, description, refs, citations);
+                    filteredResults.add(result);
+                }
+            }
+
+            return filteredResults.toArray(new WSSearchResultLiterature[0]);
+
+        } catch (Exception e) {
+            throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e);
+        }
+    }
+
+    // Helper method to decode and split the citations string into an array
+    private String[] parseCitationsFromString(String citationsString) {
+        if (citationsString == null || citationsString.isEmpty()) {
+            return new String[0];
+        }
+
+        // Replace escaped quotes and split the string
+        String decodedCitations = decodeHtmlEntities(citationsString);
+        return decodedCitations.split(", ");  // Split by comma and space
+    }
+
+    // Helper method to decode HTML entities in citation strings
+    private String decodeHtmlEntities(String input) {
+        return input.replace("&quot;", "\"").replace("&amp;", "&");
+    }
+
+    // Helper method to check if the query matches in any field
+    private boolean matchesQuery(String query, String id, String urlPathway, String name, String species, String revision, String authors, String description, String refs, String[] citations) {
+        String lowerCaseQuery = query.toLowerCase();
+
+        // Check if the query matches any field
+        if ((id != null && id.toLowerCase().contains(lowerCaseQuery)) ||
+            (urlPathway != null && urlPathway.toLowerCase().contains(lowerCaseQuery)) ||
+            (name != null && name.toLowerCase().contains(lowerCaseQuery)) ||
+            (species != null && species.toLowerCase().contains(lowerCaseQuery)) ||
+            (revision != null && revision.toLowerCase().contains(lowerCaseQuery)) ||
+            (authors != null && authors.toLowerCase().contains(lowerCaseQuery)) ||
+            (description != null && description.toLowerCase().contains(lowerCaseQuery)) ||
+            (refs != null && refs.toLowerCase().contains(lowerCaseQuery))) {
+            return true;
+        }
+
+        // Check if the query matches any of the citations
+        for (String citation : citations) {
+            if (citation != null && citation.toLowerCase().contains(lowerCaseQuery)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 	
 	@Override
 	public WSSearchResultText[] findPathwaysByText(String query, String field) throws RemoteException {
