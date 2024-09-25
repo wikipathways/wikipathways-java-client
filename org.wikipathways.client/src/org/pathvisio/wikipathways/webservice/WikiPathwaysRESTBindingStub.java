@@ -258,20 +258,7 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();  
 
-			String name = root.getAttributeValue("Name");       
-			String organism = root.getAttributeValue("Organism");
-			String version = root.getAttributeValue("Version");
-
-			String[] versionParts = version.split("_");
-			String wpId = versionParts[0];  
-			String revisionId = versionParts[1].substring(1);
-			String pathwayUrl = "https://www.wikipathways.org/pathways/" + wpId + ".html";
-
-			XMLOutputter xmlOutputter = new XMLOutputter(Format.getRawFormat());
-			String gpml = xmlOutputter.outputString(root);
-						
-			WSPathway wp = new WSPathway(gpml, wpId, pathwayUrl, name, organism, revisionId);
-			return wp;
+			return Utils.parsePathway(root);
 	
 		} catch (Exception e) {
 			e.printStackTrace();

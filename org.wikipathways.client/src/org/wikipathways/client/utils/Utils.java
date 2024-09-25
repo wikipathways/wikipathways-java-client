@@ -40,6 +40,8 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 import org.pathvisio.wikipathways.webservice.WSCurationTag;
 import org.pathvisio.wikipathways.webservice.WSCurationTagHistory;
 import org.pathvisio.wikipathways.webservice.WSHistoryRow;
@@ -149,6 +151,22 @@ public class Utils {
 		return ontTerm;
 	}
 	
+	public static WSPathway parsePathway(Element root) throws UnsupportedEncodingException {
+ 		String name = root.getAttributeValue("Name");        
+   		String organism = root.getAttributeValue("Organism"); 
+    	String version = root.getAttributeValue("Version");   
+    
+    	String[] versionParts = version.split("_");
+    	String wpId = versionParts[0];  
+    	String revisionId = versionParts[1].substring(1);  
+
+    	String pathwayUrl = "https://www.wikipathways.org/pathways/" + wpId + ".html";
+    
+    	XMLOutputter xmlOutputter = new XMLOutputter(Format.getRawFormat());
+    	String gpml = xmlOutputter.outputString(root);
+    
+    	return new WSPathway(gpml, wpId, pathwayUrl, name, organism, revisionId);
+	}
 	
 	public static WSPathwayHistory parsePathwayHistory(Element hist) {
 		String id = hist.getChildText("id", WSNamespaces.NS2);
