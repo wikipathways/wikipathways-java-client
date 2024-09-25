@@ -263,39 +263,6 @@ public class WikiPathwaysClient {
 		return port.createPathway(out, auth);
 	}
 
-	/**
-	 * Apply a curation tag to a pathway. Will overwrite existing tags with the same name.
-	 * @param id The pathway identifier
-	 * @param tagName The name of the tag (e.g. CurationTag:Approved)
-	 * @param tagText The tag text
-	 * @param revision The revision to apply the tag to
-	 * @throws RemoteException
-	 */
-	public boolean saveCurationTag(String id, String tagName, String tagText, int revision) throws RemoteException {
-		return port.saveCurationTag(id, tagName, tagText, revision, auth);
-	}
-
-	/**
-	 * Apply a curation tag to a pathway. Will overwrite existing tags with the same name.
-	 * @param id The pathway identifier
-	 * @param tagName The name of the tag (e.g. CurationTag:Approved)
-	 * @param tagText The tag text
-	 * @throws RemoteException
-	 */
-	public boolean saveCurationTag(String id, String tagName, String text) throws RemoteException {
-		return saveCurationTag(id, tagName, text, 0);
-	}
-
-	/**
-	 * Remove the given curation tag from the pathway
-	 * @param id The pathway identifier
-	 * @param tagName The name of the tag (e.g. CurationTag:Approved)
-	 * @throws RemoteException
-	 */
-	public boolean removeCurationTag(String id, String tagName) throws RemoteException {
-		return port.removeCurationTag(id, tagName, auth);
-	}
-	
 	/** 
 	 * add ontology tag to pathway
 	 */
@@ -311,56 +278,6 @@ public class WikiPathwaysClient {
 	}
 
 	/**
-	 * Get all curation tags for the given pathway
-	 * @param id The pathway identifier
-	 * @return An array with the curation tags.
-	 * @throws RemoteException
-	 */
-	public WSCurationTag[] getCurationTags(String id) throws RemoteException {
-		WSCurationTag[] tags = port.getCurationTags(id);
-		if(tags == null) tags = new WSCurationTag[0];
-		return tags;
-	}
-
-	/**
-	 * get all pathways for a specific curation tag
-	 */
-	public WSCurationTag[] getCurationTagsByName(String tagName) throws RemoteException {
-		WSCurationTag[] tags = port.getCurationTagsByName(tagName);
-		if(tags == null) tags = new WSCurationTag[0];
-		return tags;
-	}
-
-	/**
-	 * Get the curation tag history for the given pathway
-	 * @param id The pathway identifier
-	 * @param cutoff Only get history items that occured after the given cutoff date
-	 * @return An array with the history items
-	 * @throws RemoteException
-	 */
-	public WSCurationTagHistory[] getCurationTagHistory(String id, Date cutoff) throws RemoteException {
-		String timestamp = "0";
-		if(cutoff != null) {
-			// turn Date into expected timestamp format, in GMT:
-			SimpleDateFormat sdf = new SimpleDateFormat ("yyyyMMddHHmmss");
-			sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-			timestamp = sdf.format(cutoff);
-		}
-		WSCurationTagHistory[] hist = port.getCurationTagHistory(id, timestamp);
-		if(hist == null) hist = new WSCurationTagHistory[0];
-		return hist;
-	}
-
-	/**
-	 * Get the curation tag history for the given pathway
-	 * @param id The pathway identifier
-	 * @return An array with the history items
-	 * @throws RemoteException
-	 */
-	public WSCurationTagHistory[] getCurationTagHistory(String id) throws RemoteException {
-		return getCurationTagHistory(id, null);
-	}
-	/**
 	 * Login using your WikiPathways account. You need to login in order
 	 * to make changes to pathways.
 	 * @param name The username of the WikiPathways account
@@ -369,18 +286,6 @@ public class WikiPathwaysClient {
 	 */
 	public void login(String name, String pass) throws RemoteException {
 		auth = new WSAuth(name, port.login(name, pass));
-	}
-
-	/**
-	 * Get a list of recently changed pathways.
-	 * @param cutoff Only return changes since this date.
-	 * @throws RemoteException
-	 */
-	public WSPathwayInfo[] getRecentChanges(Date cutoff) throws RemoteException {
-		String timestamp = dateToTimestamp(cutoff);
-		WSPathwayInfo[] changes = port.getRecentChanges(timestamp);
-		if(changes == null) changes = new WSPathwayInfo[0];
-		return changes;
 	}
 
 	private static String dateToTimestamp(Date date) {
@@ -434,14 +339,6 @@ public class WikiPathwaysClient {
 		WSSearchResult[] r = port.findInteractions(query);
 		if(r == null) r = new WSSearchResult[0];
 		return r;
-	}
-
-	public File getColoredPathway(String pwId, String revision, String [] graphId, String [] color, String fileType, File output) throws IOException {
-		byte [] result = port.getColoredPathway(pwId, revision, graphId, color, fileType);
-		FileOutputStream fos = new FileOutputStream(output);
-		fos.write(result);
-		fos.close();
-		return output;
 	}
 	
 	/**

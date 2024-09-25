@@ -161,78 +161,6 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 		}
 	}
 	
-	@Override
-	public byte[] getColoredPathway(String pwId, String revision, String[] graphId, String[] color, String fileType) throws RemoteException {
-		String url = baseUrl + "/getColoredPathway?pwId=" + pwId + "&revision=" + revision;
-		for(String g : graphId) {
-			url = url + "&graphId=" + g;
-		}
-		for(String c : color) {
-			url = url + "&color=" + c;
-		}
-		url = url + "&fileType=" + fileType;
-		try {
-			Document jdomDocument = Utils.connect(url, client);
-			Element data = jdomDocument.getRootElement().getChild("data", WSNamespaces.NS1);
-			return Base64.decodeBase64(data.getValue());
-		} catch(Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
-		}
-	}
-	
-	@Override
-	public WSCurationTagHistory[] getCurationTagHistory(String pwId, String timestamp) throws RemoteException {
-		String url = baseUrl + "/getCurationTagHistory?pwId=" + pwId;
-		if(timestamp != null) {
-			url = url + "&timestamp=" + timestamp;
-		}
-		try {
-			Document jdomDocument = Utils.connect(url, client);
-			Element root = jdomDocument.getRootElement();
-			List<Element> list = root.getChildren("history", WSNamespaces.NS1);
-			WSCurationTagHistory [] hist = new WSCurationTagHistory[list.size()];
-			for (int i = 0; i < list.size(); i++) {
-				hist[i] = Utils.parseCurationTagHistory(list.get(i));
-			}
-			return hist;
-		} catch(Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
-		}
-	}
-	
-	@Override
-	public WSCurationTag[] getCurationTags(String pwId) throws RemoteException {
-		String url = baseUrl + "/getCurationTags?pwId=" + pwId;
-		try {
-			Document jdomDocument = Utils.connect(url, client);
-			Element root = jdomDocument.getRootElement();
-			List<Element> list = root.getChildren("tags", WSNamespaces.NS1);
-			WSCurationTag [] tags = new WSCurationTag[list.size()];
-			for (int i = 0; i < list.size(); i++) {
-				tags[i] = Utils.parseCurationTag(list.get(i));
-			}
-			return tags;
-		} catch (Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
-		}
-	}
-	
-	@Override
-	public WSCurationTag[] getCurationTagsByName(String tagName) throws RemoteException {
-		String url = baseUrl + "/getCurationTagsByName?tagName=" + tagName;
-		try {
-			Document jdomDocument = Utils.connect(url, client);
-			Element root = jdomDocument.getRootElement();
-			List<Element> list = root.getChildren("tags", WSNamespaces.NS1);
-			WSCurationTag [] tags = new WSCurationTag[list.size()];
-			for (int i = 0; i < list.size(); i++) {
-				tags[i] = Utils.parseCurationTag(list.get(i));
-			}
-			return tags;
-		} catch (Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
-		}
-	}
 	
 	@Override
 	public WSOntologyTerm[] getOntologyTermsByPathway(String pwId) throws RemoteException {
@@ -358,24 +286,7 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
-	
-	@Override
-	public WSPathwayInfo[] getRecentChanges(String timestamp)
-			throws RemoteException {
-		String url = baseUrl + "/getRecentChanges?timestamp=" + timestamp;
-		try {
-			Document jdomDocument = Utils.connect(url, client);
-			Element root = jdomDocument.getRootElement();
-			List<Element> list = root.getChildren("pathways", WSNamespaces.NS1);
-			WSPathwayInfo [] info = new WSPathwayInfo[list.size()];
-			for (int i = 0; i < list.size(); i++) {
-				info[i] = Utils.parseWSPathwayInfo(list.get(i));
-			}
-			return info;
-		} catch (Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
-		}
-	}
+
 	
 	@Override
 	public String getUserByOrcid(String orcid) throws RemoteException {
@@ -481,44 +392,6 @@ public WSPathwayInfo[] listPathways(String organism) throws RemoteException {
 		}
 	}
 	
-	@Override
-	public boolean removeCurationTag(String pwId, String tagName, WSAuth auth) throws RemoteException {
-		String url = baseUrl + "/removeCurationTag?pwId=" + pwId + 
-				"&tagName=" + tagName + 
-				"&auth=" + auth.getKey() + 
-				"&username=" + auth.getUser();
-		try { 
-			Document jdomDocument = Utils.connect(url, client);
-			String success = jdomDocument.getRootElement().getChild("success", WSNamespaces.NS1).getValue();
-			if(success.equals("1")) {
-				return true;
-			}
-			return false;
-		} catch (Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
-		}
-	}
-	
-	@Override
-	public boolean saveCurationTag(String pwId, String tagName, String tagText, int revision, WSAuth auth) throws RemoteException {
-		try { 
-			String url = baseUrl + "/saveCurationTag?pwId=" + pwId + 
-					"&tagName=" + tagName + 
-					"&text=" + URLEncoder.encode(tagText, "UTF-8") + 
-					"&revision=" + revision + 
-					"&auth=" + auth.getKey() + 
-					"&username=" + auth.getUser();
-			Document jdomDocument = Utils.connect(url, client);
-			String success = jdomDocument.getRootElement().getChild("success", WSNamespaces.NS1).getValue();
-			
-			if(success.equals("1")) {
-				return true;
-			}
-			return false;
-		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
-		}
-	}
 	
 	@Override
 	public boolean saveOntologyTag(String pwId, String term, String termId, WSAuth auth) throws RemoteException {
