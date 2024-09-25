@@ -41,8 +41,6 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
-import org.pathvisio.wikipathways.webservice.WSCurationTag;
-import org.pathvisio.wikipathways.webservice.WSCurationTagHistory;
 import org.pathvisio.wikipathways.webservice.WSHistoryRow;
 import org.pathvisio.wikipathways.webservice.WSIndexField;
 import org.pathvisio.wikipathways.webservice.WSNamespaces;
@@ -190,29 +188,5 @@ public class Utils {
 		String timestamp = historyRow.getChildText("timestamp", WSNamespaces.NS2);
 		
 		return new WSHistoryRow(revision, comment, user, timestamp);
-	}
-	
-	public static WSCurationTagHistory parseCurationTagHistory(Element history) {
-		String tagName = history.getChildText("tagName", WSNamespaces.NS2);
-		String text = history.getChildText("text", WSNamespaces.NS2);
-		String pathwayId = history.getChildText("pathwayId", WSNamespaces.NS2);
-		String action = history.getChildText("action", WSNamespaces.NS2);
-		String user = history.getChildText("user", WSNamespaces.NS2);
-		String time = history.getChildText("time", WSNamespaces.NS2);
-		
-		return new WSCurationTagHistory(tagName, text, pathwayId, action, user, time);
-	}
-
-	public static WSCurationTag parseCurationTag(Element tag) {
-		String name = tag.getChildText("name", WSNamespaces.NS2);
-		String displayName = tag.getChildText("displayName", WSNamespaces.NS2);
-		String text = tag.getChildText("text", WSNamespaces.NS2);
-		String timeModified = tag.getChildText("timeModified", WSNamespaces.NS2);
-		String userModified = tag.getChildText("userModified", WSNamespaces.NS2);
-		
-		WSPathwayInfo pathway = Utils.parseWSPathwayInfo(tag.getChild("pathway", WSNamespaces.NS2));
-		
-		WSCurationTag t = new WSCurationTag(name, displayName, pathway, pathway.getRevision(), text, Long.parseLong(timeModified), userModified);
-		return t;
 	}
 }
