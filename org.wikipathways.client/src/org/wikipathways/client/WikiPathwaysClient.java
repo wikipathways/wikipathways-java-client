@@ -176,19 +176,18 @@ public class WikiPathwaysClient {
 	 * 
 	 * @param fileType
 	 * @param id
-	 * @param revision
 	 * @return
 	 * @throws RemoteException
 	 */
-	public byte[] getPathwayAs(String fileType, String id, int revision) throws RemoteException {
-		return port.getPathwayAs(fileType, id, revision);
+	public byte[] getPathwayAs(String fileType, String id) throws RemoteException {
+		return port.getPathwayAs(fileType, id);
 	}
 
 	/**
 	 * downloads and saves a pathway in different file formats
 	 */
-	public void downloadPathwayAs(File output, String fileType, String id, int revision) throws IOException {
-		byte[] data = getPathwayAs(fileType, id, revision);
+	public void downloadPathwayAs(File output, String fileType, String id) throws IOException {
+		byte[] data = getPathwayAs(fileType, id);
 		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(output));
 		out.write(data);
 		out.close();

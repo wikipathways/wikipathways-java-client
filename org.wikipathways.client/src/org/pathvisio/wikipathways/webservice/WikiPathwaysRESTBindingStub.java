@@ -401,36 +401,38 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 	}
 
 	@Override
-	public byte[] getPathwayAs(String fileType, String pwId, int revision) throws RemoteException {
+	public byte[] getPathwayAs(String fileType, String pwId) throws RemoteException {
 		InputStream instream = null;
-		String url = baseUrl;
-		if(url.contains("webservice/webservice.php")) {
-			url = url.replace("webservice/webservice.php", "wpi.php");
-		} else if(url.contains("webservicetest")) {
-			url = url.replace("webservicetest/webservice.php", "wpi.php");
-		} else if(url.contains("webservice.wikipathways.org")) {
-			url = "http://www.wikipathways.org/wpi/wpi.php";
+		String baseUrl = "https://github.com/wikipathways/wikipathways-assets/blob/main/pathways/";
+	
+		// Ensure the file type is one of the supported types
+		if (!fileType.equals("png") && !fileType.equals("svg") && !fileType.equals("json") && !fileType.equals("gpml")) {
+			throw new RemoteException("Unsupported file type: " + fileType + ". Supported types are png, svg, json, gpml.");
 		}
-		url = url + "?action=downloadFile&type=" + fileType + "&pwTitle=Pathway:" + pwId + "&oldid=" + revision;
+	
+		// Construct the GitHub URL
+		String url = baseUrl + pwId + "/" + pwId + "." + fileType + "?raw=true";
+	
 		try {
 			HttpGet httpget = new HttpGet(url);
 			HttpResponse response = client.execute(httpget);
 			HttpEntity entity = response.getEntity();
 			instream = entity.getContent();
-			
+	
 			return IOUtils.toByteArray(instream);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		} finally {
 			try {
-				if(instream !=  null) {
+				if (instream != null) {
 					instream.close();
 				}
 			} catch (Exception e) {
-					throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
+				throw new RemoteException("Error while closing input stream for URL " + url + ": " + e.getMessage(), e.getCause());
 			}
 		}
 	}
+	
 	
 	@Override
 	public WSPathwayInfo[] getPathwaysByOntologyTerm(String term) throws RemoteException {
