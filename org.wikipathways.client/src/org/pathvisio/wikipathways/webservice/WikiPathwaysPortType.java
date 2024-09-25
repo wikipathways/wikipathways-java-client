@@ -20,9 +20,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface WikiPathwaysPortType extends Remote {
-    public String updatePathway(String pwId, String description, ByteArrayOutputStream gpml, int revision, WSAuth auth) throws RemoteException;
     public WSSearchResultXref[] findPathwaysByXref(String[] ids, String[] codes) throws RemoteException;
-    public boolean saveOntologyTag(String pwId, String term, String termId, WSAuth auth) throws RemoteException;
     public WSPathwayInfo[] getPathwaysByParentOntologyTerm(String term) throws RemoteException;
     public WSPathwayInfo getPathwayInfo(String pwId) throws RemoteException;
     public WSPathwayInfo[] listPathways(String organism) throws RemoteException;
@@ -31,13 +29,10 @@ public interface WikiPathwaysPortType extends Remote {
     public WSPathwayHistory getPathwayHistory(String pwId, String timestamp) throws RemoteException;
     public String[] getXrefList(String pwId, String code) throws RemoteException;
     public WSSearchResult[] findPathwaysByText(String query, String species) throws RemoteException;
-    public WSPathwayInfo createPathway(ByteArrayOutputStream gpml, WSAuth auth) throws RemoteException;
     public byte[] getPathwayAs(String fileType, String pwId, int revision) throws RemoteException;
     public WSSearchResult[] findInteractions(String query) throws RemoteException;
-    public String login(String name, String pass) throws RemoteException;
     public WSPathway getPathway(String pwId, int revision) throws RemoteException;
     public WSOntologyTerm[] getOntologyTermsByPathway(String pwId) throws RemoteException;
     public WSPathwayInfo[] getPathwaysByOntologyTerm(String term) throws RemoteException;
     public String getUserByOrcid(String orcid) throws RemoteException;
-    public boolean removeOntologyTag(String pwId, String termId, WSAuth auth) throws RemoteException;
 }

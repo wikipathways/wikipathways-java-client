@@ -38,7 +38,6 @@ import org.pathvisio.core.model.ConverterException;
 import org.pathvisio.core.model.GpmlFormat;
 import org.pathvisio.core.model.Pathway;
 import org.pathvisio.core.view.MIMShapes;
-import org.pathvisio.wikipathways.webservice.WSAuth;
 import org.pathvisio.wikipathways.webservice.WSOntologyTerm;
 import org.pathvisio.wikipathways.webservice.WSPathway;
 import org.pathvisio.wikipathways.webservice.WSPathwayHistory;
@@ -58,8 +57,6 @@ import org.pathvisio.wikipathways.webservice.WikiPathwaysRESTBindingStub;
  */
 public class WikiPathwaysClient {
 	private WikiPathwaysPortType port;
-
-	private WSAuth auth;
 	
 	/**
 	 * Create an instance of this class.
@@ -227,62 +224,6 @@ public class WikiPathwaysClient {
 		Pathway p = new Pathway();
 		p.readFromXml(new StringReader(wsp.getGpml()), true);
 		return p;
-	}
-
-	/**
-	 * Update a pathway on WikiPathways.
-	 * Note: you need to login first, see: {@link #login(String, String)}.
-	 * @param id The pathway identifier
-	 * @param pathway The updated pathway data
-	 * @param description A description of the changes
-	 * @param revision The revision these changes were based on (to prevent conflicts)
-	 * @return returns new revision of pathway
-	 * @throws UnsupportedEncodingException 
-	 */
-	public String updatePathway(String id, Pathway pathway, String description, int revision) throws ConverterException, RemoteException, UnsupportedEncodingException {
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		GpmlFormat.writeToXml(pathway, out, true);
-		return port.updatePathway(id, description, out, revision, auth);
-	}
-
-	/**
-	 * Creates a new pathway on WikiPathways.
-	 * Note: you need to login first, see: {@link #login(String, String)}.
-	 * @param pathway The pathway to create on WikiPathways
-	 * @return The WSPathwayInfo object, containing the identifier and revision of the created pathway.
-	 * @throws RemoteException
-	 * @throws ConverterException
-	 * @throws UnsupportedEncodingException 
-	 */
-	public WSPathwayInfo createPathway(Pathway pathway) throws RemoteException, ConverterException, UnsupportedEncodingException {
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		GpmlFormat.writeToXml(pathway, out, true);
-		return port.createPathway(out, auth);
-	}
-
-	/** 
-	 * add ontology tag to pathway
-	 */
-	public boolean saveOntologyTag(String id, String term, String termId) throws RemoteException {
-		return port.saveOntologyTag(id, term, termId, auth);
-	}
-	
-	/**
-	 * remove ontology tag from pathway
-	 */
-	public boolean removeOntologyTag(String id, String termId) throws RemoteException {
-		return port.removeOntologyTag(id, termId, auth);
-	}
-
-	/**
-	 * Login using your WikiPathways account. You need to login in order
-	 * to make changes to pathways.
-	 * @param name The username of the WikiPathways account
-	 * @param pass The password of the WikiPathways account
-	 * @throws RemoteException
-	 */
-	public void login(String name, String pass) throws RemoteException {
-		auth = new WSAuth(name, port.login(name, pass));
 	}
 
 	private static String dateToTimestamp(Date date) {

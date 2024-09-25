@@ -42,7 +42,6 @@ public class TestListOrganisms {
 	@Test
 	public void test() throws RemoteException {
 		String [] orgs = client.listOrganisms();
-        System.out.println(orgs);
 		assertTrue(orgs.length >= 27);
 			
 		List<String> list = new ArrayList<String>(Arrays.asList(orgs));
