@@ -52,6 +52,7 @@ import org.pathvisio.wikipathways.webservice.WSPathway;
 import org.pathvisio.wikipathways.webservice.WSPathwayHistory;
 import org.pathvisio.wikipathways.webservice.WSPathwayInfo;
 import org.pathvisio.wikipathways.webservice.WSSearchResult;
+import org.pathvisio.wikipathways.webservice.WSSearchResultText;
 import org.pathvisio.wikipathways.webservice.WSSearchResultXref;
 
 
@@ -266,6 +267,22 @@ public class Utils {
 		);
 	}
 	
+public static WSSearchResultText parseWSSearchResultTextFromJson(JSONObject json) {
+    // Parse each field from the JSON object
+    String id = json.optString("id", "");
+    String url = json.optString("url", "");
+    String name = json.optString("name", "");
+    String species = json.optString("species", "");
+    String revision = json.optString("revision", "");
+    String authors = json.optString("authors", "");
+    String description = json.optString("description", "");
+    String datanodes = json.optString("datanodes", "");
+    String annotations = json.optString("annotations", "");
+    String citedIn = json.optString("citedIn", "");
+
+    // Return a new WSSearchResultText object populated with the parsed fields
+    return new WSSearchResultText(id, url, name, species, revision, authors, description, datanodes, annotations, citedIn);
+}
 
 	
 }

@@ -111,26 +111,127 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 	}
 	
 	@Override
-	public WSSearchResult[] findPathwaysByText(String query, String species) throws RemoteException {
-		query = query.replace(" ", "+");
-		String url = baseUrl + "/findPathwaysByText?query=" + query;
-		if(species != null) {
-			species = species.replace(" ", "+");
-			url = url + "&species=" + species;
+	public WSSearchResultText[] findPathwaysByText(String query, String field) throws RemoteException {
+		if (query == null || query.isEmpty()) {
+			throw new RemoteException("Must provide a query, e.g., ACE2");
 		}
+	
+		String url = BASE_URL_JSON + "findPathwaysByText.json";
+	
 		try {
-			Document jdomDocument = Utils.connect(url, client);
-			Element root = jdomDocument.getRootElement();
-			List<Element> list = root.getChildren("result", WSNamespaces.NS1);
-			WSSearchResult [] res = new WSSearchResult[list.size()];
-			for (int i = 0; i < list.size(); i++) {
-				res[i] = Utils.parseWSSearchResult(list.get(i));
+			String jsonResponse = Utils.downloadFile(url);
+	
+			JSONObject jsonObject = new JSONObject(jsonResponse);
+			JSONArray pathwayInfoArray = jsonObject.getJSONArray("pathwayInfo");
+	
+			List<WSSearchResultText> filteredResults = new ArrayList<>();
+	
+			if (field != null && !field.isEmpty()) {
+				if (!isValidField(field)) {
+					throw new RemoteException("Must provide a supported field, e.g., name");
+				}
 			}
-			return res;
+				for (int i = 0; i < pathwayInfoArray.length(); i++) {
+				JSONObject pathwayInfo = pathwayInfoArray.getJSONObject(i);
+	
+				WSSearchResultText result = Utils.parseWSSearchResultTextFromJson(pathwayInfo);
+	
+				if (field != null && !field.isEmpty()) {
+					if (containsQueryInField(result, field, query)) {
+						filteredResults.add(result);
+					}
+				} else {
+					if (containsQuery(result, query)) {
+						filteredResults.add(result);
+					}
+				}
+			}
+	
+			return filteredResults.toArray(new WSSearchResultText[0]);
+	
 		} catch (Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e);
 		}
 	}
+	
+	private boolean isValidField(String field) {
+		switch (field.toLowerCase()) {
+			case "id":
+			case "url":
+			case "name":
+			case "species":
+			case "revision":
+			case "authors":
+			case "description":
+			case "datanodes":
+			case "annotations":
+			case "citedin":
+				return true;
+			default:
+				return false;
+		}
+	}
+	
+	private boolean containsQuery(WSSearchResultText result, String query) {
+		String lowerCaseQuery = query.toLowerCase();
+		return (result.getId() != null && result.getId().toLowerCase().contains(lowerCaseQuery)) ||
+			   (result.getUrl() != null && result.getUrl().toLowerCase().contains(lowerCaseQuery)) ||
+			   (result.getName() != null && result.getName().toLowerCase().contains(lowerCaseQuery)) ||
+			   (result.getSpecies() != null && result.getSpecies().toLowerCase().contains(lowerCaseQuery)) ||
+			   (result.getRevision() != null && result.getRevision().toLowerCase().contains(lowerCaseQuery)) ||
+			   (result.getAuthors() != null && result.getAuthors().toLowerCase().contains(lowerCaseQuery)) ||
+			   (result.getDescription() != null && result.getDescription().toLowerCase().contains(lowerCaseQuery)) ||
+			   (result.getDatanodes() != null && result.getDatanodes().toLowerCase().contains(lowerCaseQuery)) ||
+			   (result.getAnnotations() != null && result.getAnnotations().toLowerCase().contains(lowerCaseQuery)) ||
+			   (result.getCitedIn() != null && result.getCitedIn().toLowerCase().contains(lowerCaseQuery));
+	}
+	
+	private boolean containsQueryInField(WSSearchResultText result, String field, String query) {
+		String lowerCaseQuery = query.toLowerCase();
+		String fieldValue = null;
+	
+		switch (field.toLowerCase()) {
+			case "id":
+				fieldValue = result.getId();
+				break;
+			case "url":
+				fieldValue = result.getUrl();
+				break;
+			case "name":
+				fieldValue = result.getName();
+				break;
+			case "species":
+				fieldValue = result.getSpecies();
+				break;
+			case "revision":
+				fieldValue = result.getRevision();
+				break;
+			case "authors":
+				fieldValue = result.getAuthors();
+				break;
+			case "description":
+				fieldValue = result.getDescription();
+				break;
+			case "datanodes":
+				fieldValue = result.getDatanodes();
+				break;
+			case "annotations":
+				fieldValue = result.getAnnotations();
+				break;
+			case "citedin":
+				fieldValue = result.getCitedIn();
+				break;
+			default:
+				return false;
+		}
+
+			if (fieldValue == null) {
+			return false;
+		} else {
+			return fieldValue.toLowerCase().contains(lowerCaseQuery);
+		}
+	}
+	
 	
 	@Override
 	public WSSearchResultXref[] findPathwaysByXref(String[] ids, String[] codes) throws RemoteException {

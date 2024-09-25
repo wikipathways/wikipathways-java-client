@@ -15,43 +15,55 @@
 //
 package org.wikipathways.client;
 
-import java.rmi.RemoteException;
-import java.util.Arrays;
-import java.util.List;
-
-import org.bridgedb.DataSource;
-import org.bridgedb.bio.DataSourceTxt;
-
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import java.rmi.RemoteException;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.pathvisio.wikipathways.webservice.WSSearchResultText;
 import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
- * JUnit Test for webservice function: xrefList
+ * JUnit Test for webservice function: findPathwaysByText
  * @author mkutmon
  */
-public class TestGetXrefList {
+public class TestFindPathwaysByText {
 
 	private WikiPathwaysClient client;
 	
 	@Before
 	public void setUp() throws Exception {
 		client = ConnectionSettings.createClient();
-		if (!DataSource.systemCodeExists("S")) DataSourceTxt.init();
 	}
 
 	@Test
 	public void test() throws RemoteException {
-		String [] res = client.getXrefList("WP1", DataSource.getExistingBySystemCode("L"));
-		List<String> list = Arrays.asList(res);
-		assertTrue(list.contains("15450"));
-		assertTrue(list.contains("17777"));
-		
-		String [] res2 = client.getXrefList("WP1", DataSource.getExistingBySystemCode("En"));
-		List<String> list2 = Arrays.asList(res2);
-		assertTrue(list2.contains("ENSMUSG00000032207"));
-		assertTrue(list2.contains("ENSMUSG00000028158"));
+		String query = "apoptosis";
+		WSSearchResultText [] results = client.findPathwaysByText(query);
+		boolean found = false;
+		for(WSSearchResultText res : results) {
+			if(res.getId().equals("WP254")) {
+				found = true;
+			}
+		}
+		assertTrue(found);
 	}
+
+	@Test
+	public void testOrg() throws RemoteException {
+    	String query = "apoptosis";
+    
+    	WSSearchResultText[] results = client.findPathwaysByText(query, "species");
+    
+    	boolean found = false;
+    	for(WSSearchResultText res : results) {
+        	if(res.getId().equals("WP254")) {
+            	found = true;
+        	}
+    	}
+    	assertFalse(found);
+	}
+
 }

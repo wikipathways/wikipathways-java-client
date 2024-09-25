@@ -44,6 +44,7 @@ import org.pathvisio.wikipathways.webservice.WSPathwayHistory;
 import org.pathvisio.wikipathways.webservice.WSPathwayInfo;
 import org.pathvisio.wikipathways.webservice.WSSearchResult;
 import org.pathvisio.wikipathways.webservice.WSSearchResultXref;
+import org.pathvisio.wikipathways.webservice.WSSearchResultText;
 import org.pathvisio.wikipathways.webservice.WikiPathwaysPortType;
 import org.pathvisio.wikipathways.webservice.WikiPathwaysRESTBindingStub;
 
@@ -233,19 +234,15 @@ public class WikiPathwaysClient {
 		return sdf.format(date);
 	}
 
-	public WSSearchResult[] findPathwaysByText(String query) throws RemoteException {
-		WSSearchResult[] r = port.findPathwaysByText(query, null);
-		if(r == null) r = new WSSearchResult[0];
+	public WSSearchResultText[] findPathwaysByText(String query) throws RemoteException {
+		WSSearchResultText[] r = port.findPathwaysByText(query, null);
+		if(r == null) r = new WSSearchResultText[0];
 		return r;
 	}
 
-	public WSSearchResult[] findPathwaysByText(String query, Organism organism) throws RemoteException {
-		String species = null;
-		if(organism != null) {
-			species = organism.latinName();
-		}
-		WSSearchResult[] r =  port.findPathwaysByText(query, species);
-		if(r == null) r = new WSSearchResult[0];
+	public WSSearchResultText[] findPathwaysByText(String query, String field) throws RemoteException {
+		WSSearchResultText[] r =  port.findPathwaysByText(query, field);
+		if(r == null) r = new WSSearchResultText[0];
 		return r;
 	}
 
