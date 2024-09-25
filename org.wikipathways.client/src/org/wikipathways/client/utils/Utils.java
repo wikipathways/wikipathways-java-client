@@ -22,9 +22,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.net.URL;
 
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
@@ -189,4 +191,38 @@ public class Utils {
 		
 		return new WSHistoryRow(revision, comment, user, timestamp);
 	}
+
+	public static String downloadFile(String fileUrl) throws Exception {
+        StringBuilder result = new StringBuilder();
+        HttpURLConnection connection = null;
+        BufferedReader reader = null;
+
+        try {
+            URL url = new URL(fileUrl);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode != HttpURLConnection.HTTP_OK) {
+                throw new Exception("Failed to fetch file from " + fileUrl + ", HTTP code: " + responseCode);
+            }
+
+            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.append(line).append("\n");
+            }
+
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+
+        return result.toString();
+    }
 }

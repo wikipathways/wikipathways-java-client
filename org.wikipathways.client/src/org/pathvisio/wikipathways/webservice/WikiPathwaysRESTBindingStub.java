@@ -25,9 +25,14 @@ import java.net.URLEncoder;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Consts;
@@ -309,24 +314,88 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
-	
+
 	@Override
-	public String[] getXrefList(String pwId, String code) throws RemoteException {
-		String url = baseUrl + "/getXrefList?pwId=" + pwId + "&code=" + code;
+	public String[] getXrefList(String pwId, String systemCode) throws RemoteException {
+		if (pwId == null || pwId.isEmpty()) {
+			throw new RemoteException("Must provide a pathway identifier, e.g., WP554");
+		}
+		if (systemCode == null || systemCode.isEmpty()) {
+			throw new RemoteException("Must provide a systemCode, e.g., L");
+		}
+	
+		Map<String, String> codeList = new HashMap<>();
+		codeList.put("En", "Ensembl");
+		codeList.put("L", "NCBI gene");
+		codeList.put("H", "HGNC");
+		codeList.put("U", "UniProt");
+		codeList.put("Wd", "Wikidata");
+		codeList.put("Ce", "ChEBI");
+		codeList.put("Ik", "InChI");
+	
+		if (!codeList.containsKey(systemCode)) {
+			throw new RemoteException("Must provide a supported systemCode, e.g., L (see docs)");
+		}
+	
+		String url = BASE_ASSETS + pwId + "/" + pwId + "-datanodes.tsv";
+	
 		try {
-			Document jdomDocument = Utils.connect(url, client);
-			Element root = jdomDocument.getRootElement();
-			List<Element> list = root.getChildren();
-			String[] xrefs = new String[list.size()];
-			for (int i = 0; i < list.size(); i++) {
-				xrefs[i] = list.get(i).getValue();
-			}
-			return xrefs;
+			String tsvData = Utils.downloadFile(url);
+	
+			List<String[]> rows = parseTsv(tsvData);
+	
+			String columnName = codeList.get(systemCode);
+			List<String> xrefs = extractColumnData(rows, columnName);
+	
+			Set<String> uniqueXrefs = new HashSet<>(xrefs);
+	
+			Set<String> compactXrefs = uniqueXrefs.stream()
+												  .map(xref -> xref.replaceAll(".*:", ""))  // Remove everything before ':'
+												  .collect(Collectors.toSet());
+	
+			return compactXrefs.toArray(new String[0]);
+	
 		} catch (Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e);
 		}
 	}
 	
+	private List<String[]> parseTsv(String tsvData) {
+		return Arrays.stream(tsvData.split("\n"))
+					 .map(row -> row.split("\t"))
+					 .collect(Collectors.toList());
+	}
+	
+	private List<String> extractColumnData(List<String[]> rows, String columnName) {
+		String[] header = rows.get(0);
+		int columnIndex = -1;
+		for (int i = 0; i < header.length; i++) {
+			if (header[i].equals(columnName)) {
+				columnIndex = i;
+				break;
+			}
+		}
+	
+		if (columnIndex == -1) {
+			return new ArrayList<>();  
+		}
+	
+		List<String> result = new ArrayList<>();
+		for (int i = 1; i < rows.size(); i++) {
+			String[] row = rows.get(i);
+	
+			if (row.length > columnIndex) {
+				String value = row[columnIndex];
+				if (value != null && !value.isEmpty()) {
+					result.add(value);
+				}
+			}
+		}
+	
+		return result;
+	}
+	
+
 	@Override
 	public String[] listOrganisms() throws RemoteException {
     try {

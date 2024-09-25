@@ -46,6 +46,7 @@ public class TestGetXrefList {
 	public void test() throws RemoteException {
 		String [] res = client.getXrefList("WP1", DataSource.getExistingBySystemCode("L"));
 		List<String> list = Arrays.asList(res);
+		System.out.println(list);
 		assertTrue(list.contains("15450"));
 		assertTrue(list.contains("17777"));
 		
