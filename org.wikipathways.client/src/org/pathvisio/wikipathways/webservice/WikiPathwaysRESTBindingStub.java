@@ -133,33 +133,71 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 	}
 	
 	@Override
-	public WSSearchResult[] findPathwaysByXref(String[] ids, String[] codes) throws RemoteException {
-		String url = baseUrl + "/findPathwaysByXref";
-		int count = 0;
-		for(String i : ids) {
-			if(count == 0) {
-				url = url + "?ids=" + i;
-				count++;
-			} else {
-				url = url + "&ids=" + i;
-			}
+	public WSSearchResultXref[] findPathwaysByXref(String[] ids, String[] codes) throws RemoteException {
+		if (ids == null || ids.length == 0) {
+			throw new RemoteException("Must provide an identifier to query, e.g., ENSG00000100031");
 		}
-		for(String c : codes) {
-			url = url + "&codes=" + c; 
+		if (codes == null || codes.length == 0) {
+			throw new RemoteException("Must provide a systemCode, e.g., En");
 		}
+	
+		// Mapping system codes to JSON keys
+		Map<String, String> codeList = new HashMap<>();
+		codeList.put("En", "ensembl");
+		codeList.put("L", "ncbigene");
+		codeList.put("H", "hgnc");
+		codeList.put("U", "uniprot");
+		codeList.put("Wd", "wikidata");
+		codeList.put("Ce", "chebi");
+		codeList.put("Ik", "inchikey");
+	
+		// Fixed URL
+		String url = BASE_URL_JSON + "findPathwaysByXref.json";
+	
 		try {
-			Document jdomDocument = Utils.connect(url, client);
-			Element root = jdomDocument.getRootElement();
-			List<Element> list = root.getChildren("result", WSNamespaces.NS1);
-			WSSearchResult [] res = new WSSearchResult[list.size()];
-			for (int i = 0; i < list.size(); i++) {
-				res[i] = Utils.parseWSSearchResult(list.get(i));
+			// Fetching JSON response
+			String jsonResponse = Utils.downloadFile(url);
+	
+			// Parsing the JSON response
+			JSONObject jsonObject = new JSONObject(jsonResponse);
+			JSONArray pathwayInfoArray = jsonObject.getJSONArray("pathwayInfo");
+	
+			// List to hold the filtered results
+			List<WSSearchResultXref> filteredResults = new ArrayList<>();
+	
+			// Iterate through the JSON array
+			for (int i = 0; i < pathwayInfoArray.length(); i++) {
+				JSONObject pathwayInfo = pathwayInfoArray.getJSONObject(i);
+	
+				// Check each system code provided
+				for (int j = 0; j < codes.length; j++) {
+					String codeKey = codeList.get(codes[j]);
+					if (codeKey != null && pathwayInfo.has(codeKey)) {
+						String codeValues = pathwayInfo.getString(codeKey);
+	
+						// Check if any of the provided ids match the code values
+						for (String id : ids) {
+							if (codeValues.toLowerCase().contains(id.toLowerCase())) {
+								// Parse and add the result if a match is found
+								filteredResults.add(Utils.parseWSSearchResultFromJson(pathwayInfo));
+								break; // Stop checking this pathway if a match is found
+							}
+						}
+					}
+				}
 			}
-			return res;
+	
+			// Convert the list to an array and return it
+			return filteredResults.toArray(new WSSearchResultXref[0]);
+	
 		} catch (Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e);
 		}
 	}
+	
+
+
+	
 	
 	
 	@Override
@@ -572,5 +610,7 @@ public WSPathwayInfo[] listPathways(String organism) throws RemoteException {
         conn.disconnect();
         return content.toString();
     }
+
+	
 
 }

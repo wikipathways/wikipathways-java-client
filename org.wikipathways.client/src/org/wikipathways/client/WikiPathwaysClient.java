@@ -44,6 +44,7 @@ import org.pathvisio.wikipathways.webservice.WSPathway;
 import org.pathvisio.wikipathways.webservice.WSPathwayHistory;
 import org.pathvisio.wikipathways.webservice.WSPathwayInfo;
 import org.pathvisio.wikipathways.webservice.WSSearchResult;
+import org.pathvisio.wikipathways.webservice.WSSearchResultXref;
 import org.pathvisio.wikipathways.webservice.WikiPathwaysPortType;
 import org.pathvisio.wikipathways.webservice.WikiPathwaysRESTBindingStub;
 
@@ -314,7 +315,7 @@ public class WikiPathwaysClient {
 	 * @return
 	 * @throws RemoteException
 	 */
-	public WSSearchResult[] findPathwaysByXref(Xref... xrefs) throws RemoteException {
+	public WSSearchResultXref[] findPathwaysByXref(Xref... xrefs) throws RemoteException {
 		String[] ids = new String[xrefs.length];
 		String[] codes = new String[xrefs.length];
 		for(int i = 0; i < xrefs.length; i++) {
@@ -326,8 +327,8 @@ public class WikiPathwaysClient {
 				codes[i] = ds.getSystemCode();
 			}
 		}
-		WSSearchResult[] r =  port.findPathwaysByXref(ids, codes);
-		if(r == null) r = new WSSearchResult[0];
+		WSSearchResultXref[] r =  port.findPathwaysByXref(ids, codes);
+		if(r == null) r = new WSSearchResultXref[0];
 		return r;
 	}
 	

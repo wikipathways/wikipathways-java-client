@@ -43,6 +43,7 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import org.json.JSONObject;
 import org.pathvisio.wikipathways.webservice.WSHistoryRow;
 import org.pathvisio.wikipathways.webservice.WSIndexField;
 import org.pathvisio.wikipathways.webservice.WSNamespaces;
@@ -51,6 +52,8 @@ import org.pathvisio.wikipathways.webservice.WSPathway;
 import org.pathvisio.wikipathways.webservice.WSPathwayHistory;
 import org.pathvisio.wikipathways.webservice.WSPathwayInfo;
 import org.pathvisio.wikipathways.webservice.WSSearchResult;
+import org.pathvisio.wikipathways.webservice.WSSearchResultXref;
+
 
 public class Utils {
 	
@@ -225,4 +228,44 @@ public class Utils {
 
         return result.toString();
     }
+
+	public static WSSearchResultXref parseWSSearchResultFromJson(JSONObject json) {
+		String id = json.getString("id");
+		String url = json.getString("url");
+		String name = json.getString("name");
+		String species = json.getString("species");
+		String revision = json.getString("revision");
+		
+		// Retrieve the new fields
+		String authors = json.optString("authors", ""); // Use optString in case the field is missing
+		String description = json.optString("description", "");
+		String ncbigene = json.optString("ncbigene", "");
+		String ensembl = json.optString("ensembl", "");
+		String hgnc = json.optString("hgnc", "");
+		String uniprot = json.optString("uniprot", "");
+		String wikidata = json.optString("wikidata", "");
+		String chebi = json.optString("chebi", "");
+		String inchikey = json.optString("inchikey", "");
+	
+		// Create a new WSSearchResult object with all fields
+		return new WSSearchResultXref(
+			id, 
+			url, 
+			name, 
+			species, 
+			revision, 
+			authors, 
+			description, 
+			ncbigene, 
+			ensembl, 
+			hgnc, 
+			uniprot, 
+			wikidata, 
+			chebi, 
+			inchikey
+		);
+	}
+	
+
+	
 }
