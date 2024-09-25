@@ -271,17 +271,31 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 	
 	@Override
 	public WSPathwayInfo getPathwayInfo(String pwId) throws RemoteException {
-		String url = baseUrl + "/getPathwayInfo?pwId=" + pwId;
 		try {
-			Document jdomDocument = Utils.connect(url, client);
-			Element root = jdomDocument.getRootElement();
-			Element p = root.getChild("pathwayInfo", WSNamespaces.NS1);
-			return Utils.parseWSPathwayInfo(p);
+			String jsonString = jsonGet(BASE_URL_JSON + "getPathwayInfo.json");
+	
+			JSONObject jsonObject = new JSONObject(jsonString);
+	
+			JSONArray pathwayInfoArray = jsonObject.getJSONArray("pathwayInfo");
+	
+			for (int i = 0; i < pathwayInfoArray.length(); i++) {
+				JSONObject pathwayInfo = pathwayInfoArray.getJSONObject(i);
+				
+				if (pathwayInfo.getString("id").equals(pwId)) {
+					String id = pathwayInfo.getString("id");
+					String url = pathwayInfo.getString("url");
+					String name = pathwayInfo.getString("name");
+					String species = pathwayInfo.getString("species");
+					String revision = pathwayInfo.getString("revision");
+					return new WSPathwayInfo(id, url, name, species, revision);
+				}
+			}
+				throw new RemoteException("Pathway with id " + pwId + " not found.");
+	
 		} catch (Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + BASE_URL_JSON + "getPathwayInfo.json" + ": " + e.getMessage(), e.getCause());
 		}
 	}
-
 	
 	@Override
 	public String getUserByOrcid(String orcid) throws RemoteException {
