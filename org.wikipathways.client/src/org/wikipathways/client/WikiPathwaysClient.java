@@ -39,6 +39,7 @@ import org.pathvisio.core.model.GpmlFormat;
 import org.pathvisio.core.model.Pathway;
 import org.pathvisio.core.view.MIMShapes;
 import org.pathvisio.wikipathways.webservice.WSOntologyTerm;
+import org.pathvisio.wikipathways.webservice.WSParentOntologyTerm;
 import org.pathvisio.wikipathways.webservice.WSPathway;
 import org.pathvisio.wikipathways.webservice.WSPathwayHistory;
 import org.pathvisio.wikipathways.webservice.WSPathwayInfo;
@@ -97,7 +98,7 @@ public class WikiPathwaysClient {
 	 * Get a list of pathways tagged with any ontology term that is the 
 	 * child of the given Ontology term.
 	 */
-	public WSPathwayInfo [] getPathwayByParentOntologyTerm(String term) throws RemoteException {
+	public WSParentOntologyTerm [] getPathwaysByParentOntologyTerm(String term) throws RemoteException {
 		return port.getPathwaysByParentOntologyTerm(term);
 	}
 	

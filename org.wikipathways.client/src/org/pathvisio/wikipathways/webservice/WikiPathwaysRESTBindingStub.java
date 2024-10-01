@@ -502,19 +502,41 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 	}
 	
 	@Override
-	public WSPathwayInfo[] getPathwaysByParentOntologyTerm(String term) throws RemoteException {		
-		String url = baseUrl + "/getPathwaysByParentOntologyTerm?term=" + term;
+	public WSParentOntologyTerm[] getPathwaysByParentOntologyTerm(String parentTerm) throws RemoteException {
+		String url = "https://www.wikipathways.org/json/getOntologyTermsByPathway.json";
+		List<WSParentOntologyTerm> parentOntologyTerms = new ArrayList<>();
+	
 		try {
-			Document jdomDocument = Utils.connect(url, client);
-			Element root = jdomDocument.getRootElement();
-			List<Element> list = root.getChildren("pathways", WSNamespaces.NS1);
-			WSPathwayInfo [] info = new WSPathwayInfo[list.size()];
-			for (int i = 0; i < list.size(); i++) {
-				info[i] = Utils.parseWSPathwayInfo(list.get(i));
+			String jsonResponse = Utils.downloadFile(url);
+	
+			JSONObject jsonObject = new JSONObject(jsonResponse);
+			JSONArray pathwaysArray = jsonObject.getJSONArray("pathways");
+	
+			for (int i = 0; i < pathwaysArray.length(); i++) {
+				JSONObject pathway = pathwaysArray.getJSONObject(i);
+				String wpid = pathway.getString("id");
+	
+				JSONArray termsArray = pathway.getJSONArray("terms");
+	
+				for (int j = 0; j < termsArray.length(); j++) {
+					JSONObject termObject = termsArray.getJSONObject(j);
+	
+					String parent = termObject.optString("parent", "");
+					if (parent.equalsIgnoreCase(parentTerm)) {
+						String ontology = termObject.getString("ontology");
+						String id = termObject.getString("id");
+						String name = termObject.getString("name");
+	
+						WSParentOntologyTerm parentOntologyTerm = new WSParentOntologyTerm(wpid, ontology, id, name, parent);
+						parentOntologyTerms.add(parentOntologyTerm);
+					}
+				}
 			}
-			return info;
+	
+			return parentOntologyTerms.toArray(new WSParentOntologyTerm[0]);
+	
 		} catch (Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing parent term " + parentTerm + ": " + e.getMessage(), e);
 		}
 	}
 	
