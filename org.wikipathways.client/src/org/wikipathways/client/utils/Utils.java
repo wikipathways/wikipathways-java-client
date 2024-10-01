@@ -146,14 +146,6 @@ public class Utils {
 		return res;
 	}
 	
-	public static WSOntologyTerm parseOntologyTerm(Element term) {
-		String ontology = term.getChildText("ontology", WSNamespaces.NS2);
-		String id = term.getChildText("id", WSNamespaces.NS2);
-		String name = term.getChildText("name", WSNamespaces.NS2);
-		WSOntologyTerm ontTerm = new WSOntologyTerm(ontology, id, name);
-		return ontTerm;
-	}
-	
 	public static WSPathway parsePathway(Element root) throws UnsupportedEncodingException {
  		String name = root.getAttributeValue("Name");        
    		String organism = root.getAttributeValue("Organism"); 

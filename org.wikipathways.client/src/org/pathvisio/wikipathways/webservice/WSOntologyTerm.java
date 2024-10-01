@@ -25,11 +25,13 @@ public class WSOntologyTerm {
 	private String ontology;
     private String id;
     private String name;
+    private String parent;
 
-    public WSOntologyTerm(String ontology, String id, String name) {
+    public WSOntologyTerm(String ontology, String id, String name, String parent) {
     	this.ontology = ontology;
     	this.id = id;
     	this.name = name;
+        this.parent = parent;
     }
 
     public String getOntology() {
@@ -55,9 +57,18 @@ public class WSOntologyTerm {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getParent() {
+        return parent;
+    }
+
+    public void setParent(String Parent) {
+        this.parent = Parent;
+    }
+    
     
     @Override
     public String toString() {
-    	return name + "\t" + id + "\t" + ontology;
+    	return name + "\t" + id + "\t" + ontology + "\t" + parent;
     }
 }
