@@ -458,19 +458,46 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 	
 	@Override
 	public WSPathwayInfo[] getPathwaysByOntologyTerm(String term) throws RemoteException {
-		term = term.replace(" ", "+");
-		String url = baseUrl + "/getPathwaysByOntologyTerm?term=" + term;
+		String url = "https://www.wikipathways.org/json/getPathwaysByOntologyTerm.json";
+		List<WSPathwayInfo> pathways = new ArrayList<>();
+	
 		try {
-			Document jdomDocument = Utils.connect(url, client);
-			Element root = jdomDocument.getRootElement();
-			List<Element> list = root.getChildren("pathways", WSNamespaces.NS1);
-			WSPathwayInfo [] info = new WSPathwayInfo[list.size()];
-			for (int i = 0; i < list.size(); i++) {
-				info[i] = Utils.parseWSPathwayInfo(list.get(i));
+			String jsonResponse = Utils.downloadFile(url);
+	
+			JSONObject jsonObject = new JSONObject(jsonResponse);
+			JSONArray termsArray = jsonObject.getJSONArray("terms");
+	
+			boolean idFound = false;
+			for (int i = 0; i < termsArray.length(); i++) {
+				JSONObject termObject = termsArray.getJSONObject(i);
+	
+				String termId = termObject.optString("id", "");
+	
+				if (termId.equalsIgnoreCase(term)) {
+					idFound = true;
+	
+					JSONArray pathwaysArray = termObject.getJSONArray("pathways");
+	
+					for (int j = 0; j < pathwaysArray.length(); j++) {
+						JSONObject pathway = pathwaysArray.getJSONObject(j);
+						String id = pathway.getString("id");
+						String pathwayUrl = pathway.getString("url");
+						String name = pathway.getString("name");
+						String species = pathway.getString("species");
+						String revision = pathway.getString("revision");
+	
+						WSPathwayInfo pathwayInfo = new WSPathwayInfo(id, pathwayUrl, name, species, revision);
+						pathways.add(pathwayInfo);
+					}
+	
+					break;
+				}
 			}
-			return info;
+
+			return pathways.toArray(new WSPathwayInfo[0]);
+	
 		} catch (Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing ontology ID " + term + ": " + e.getMessage(), e);
 		}
 	}
 	

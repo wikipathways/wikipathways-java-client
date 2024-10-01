@@ -104,7 +104,7 @@ public class WikiPathwaysClient {
 	/**
 	 * Get a list of pathways tagged with a given ontology term.
 	 */
-	public WSPathwayInfo [] getPathwayByOntologyTerm(String term) throws RemoteException {
+	public WSPathwayInfo [] getPathwaysByOntologyTerm(String term) throws RemoteException {
 		return port.getPathwaysByOntologyTerm(term);
 	}
 	

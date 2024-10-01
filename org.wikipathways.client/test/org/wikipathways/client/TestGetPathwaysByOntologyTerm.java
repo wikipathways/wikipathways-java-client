@@ -15,21 +15,21 @@
 //
 package org.wikipathways.client;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.rmi.RemoteException;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.pathvisio.wikipathways.webservice.WSOntologyTerm;
+import org.pathvisio.wikipathways.webservice.WSPathwayInfo;
 import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
- * JUnit Test for webservice function: getOntologyTermsByPathway
+ * JUnit Test for webservice function: getPathwaysByOntologyTerm
  * @author mkutmon
  */
-public class TestGetOntologyTermsByPathway {
+public class TestGetPathwaysByOntologyTerm {
 
 	private WikiPathwaysClient client;
 	
@@ -40,20 +40,9 @@ public class TestGetOntologyTermsByPathway {
 
 	@Test
 	public void test() throws RemoteException {
-		WSOntologyTerm [] terms = client.getOntologyTermsByPathway("WP254");
-		
-		boolean apoptotic = false;
-		boolean syndrome = false;
-		for(WSOntologyTerm t : terms) {
-			if(t.getName().equals("apoptotic cell death pathway")) {
-				apoptotic = true;
-			} else if (t.getName().equals("syndrome")) {
-				syndrome = true;
-			}
-		}
-	
-		assertTrue(apoptotic);
-		assertFalse(syndrome);
+		String term = "PW:0000754";
+		WSPathwayInfo [] pathways = client.getPathwaysByOntologyTerm(term);
+		assertTrue(pathways.length > 0);
 	}
-
 }
+
