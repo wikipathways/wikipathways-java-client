@@ -40,6 +40,7 @@ import org.pathvisio.wikipathways.webservice.WSOntologyTerm;
 import org.pathvisio.wikipathways.webservice.WSParentOntologyTerm;
 import org.pathvisio.wikipathways.webservice.WSPathway;
 import org.pathvisio.wikipathways.webservice.WSPathwayInfo;
+import org.pathvisio.wikipathways.webservice.WSPathwayInfoFull;
 import org.pathvisio.wikipathways.webservice.WSSearchResultLiterature;
 import org.pathvisio.wikipathways.webservice.WSSearchResultXref;
 import org.pathvisio.wikipathways.webservice.WSSearchResultText;
@@ -85,7 +86,7 @@ public class WikiPathwaysClient {
 	 * Get a info about the pathway (without getting the actual
 	 * GPML code).
 	 */
-	public WSPathwayInfo getPathwayInfo(String id) throws RemoteException {
+	public WSPathwayInfoFull getPathwayInfo(String id) throws RemoteException {
 		return port.getPathwayInfo(id);
 	}
 

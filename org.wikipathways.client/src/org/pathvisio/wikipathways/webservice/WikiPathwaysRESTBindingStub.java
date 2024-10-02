@@ -567,7 +567,7 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 	}
 
 	@Override
-	public WSPathwayInfo getPathwayInfo(String pwId) throws RemoteException {
+	public WSPathwayInfoFull getPathwayInfo(String pwId) throws RemoteException {
 		try {
 			String jsonString = jsonGet(BASE_URL_JSON + "getPathwayInfo.json");
 
@@ -584,7 +584,13 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 					String name = pathwayInfo.getString("name");
 					String species = pathwayInfo.getString("species");
 					String revision = pathwayInfo.getString("revision");
-					return new WSPathwayInfo(id, url, name, species, revision);
+
+					String authors = pathwayInfo.optString("authors");  
+                	String description = pathwayInfo.optString("description");
+                	String citedIn = pathwayInfo.optString("citedIn");
+
+					return new WSPathwayInfoFull(id, url, name, species, revision, authors, description, citedIn);
+
 				}
 			}
 			throw new RemoteException("Pathway with id " + pwId + " not found.");

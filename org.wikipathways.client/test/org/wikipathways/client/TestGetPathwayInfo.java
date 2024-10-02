@@ -21,7 +21,7 @@ import java.rmi.RemoteException;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.pathvisio.wikipathways.webservice.WSPathwayInfo;
+import org.pathvisio.wikipathways.webservice.WSPathwayInfoFull;
 import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
@@ -40,10 +40,12 @@ public class TestGetPathwayInfo {
 
 	@Test
 	public void test() throws RemoteException {
-		WSPathwayInfo info = client.getPathwayInfo("WP554");
+		WSPathwayInfoFull info = client.getPathwayInfo("WP554");
 
 		assertEquals("ACE inhibitor pathway", info.getName());
 		assertEquals("Homo sapiens", info.getSpecies());
+		assertEquals("C.F.Thorn, MaintBot, Jinwook, Khanspers, AlexanderPico, Thomas, MartijnVanIersel, Egonw, Christine Chichester, Nuno, DeSl, Mkutmon, Eweitz", info.getAuthors());
+
 	}
 
 }
