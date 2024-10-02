@@ -1,4 +1,4 @@
-# Java Client Package for WikiPathways
+# Java Client Library for WikiPathways
 
 ## Introduction
 Java library for the WikiPathways web service.
