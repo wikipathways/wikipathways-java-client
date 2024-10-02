@@ -542,6 +542,38 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			throw new RemoteException("Error while processing community tag " + communityTag + ": " + e.getMessage(), e);
 		}
 	}
+
+
+	@Override
+	public String getCommunityByPathway(String pwId) throws RemoteException {
+    String url = BASE_URL_JSON + "listCommunities.json";
+
+    try {
+        String jsonString = jsonGet(url);
+
+        JSONObject jsonObject = new JSONObject(jsonString);
+        JSONArray communitiesArray = jsonObject.getJSONArray("communities");
+
+        for (int i = 0; i < communitiesArray.length(); i++) {
+            JSONObject community = communitiesArray.getJSONObject(i);
+            JSONArray pathwaysArray = community.getJSONArray("pathways");
+
+            for (int j = 0; j < pathwaysArray.length(); j++) {
+                JSONObject pathway = pathwaysArray.getJSONObject(j);
+                String id = pathway.getString("id");
+
+                if (id.equalsIgnoreCase(pwId)) {
+                    return community.getString("community-tag");
+                }
+            }
+        }
+
+        return null;
+
+    } catch (Exception e) {
+        throw new RemoteException("Error while processing pathway ID " + pwId + ": " + e.getMessage(), e);
+    }
+}
 	
 	@Override
 	public WSParentOntologyTerm[] getPathwaysByParentOntologyTerm(String parentTerm) throws RemoteException {

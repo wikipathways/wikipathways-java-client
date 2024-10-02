@@ -101,11 +101,19 @@ public class WikiPathwaysClient {
 	}
 
 		/**
-	 * Get a list of pathways tagged with community tag
+	 * Get a list of pathways tagged with community tag.
 	 */
 	public WSPathwayInfo [] getPathwaysByCommunity(String tag) throws RemoteException {
 		return port.getPathwaysByCommunity(tag);
 	}
+
+			/**
+	 * Get a with community tag with a given pathway ID.
+	 */
+	public String getCommunityByPathway(String pwId) throws RemoteException {
+		return port.getCommunityByPathway(pwId);
+	}
+	
 	
 	
 	/**
