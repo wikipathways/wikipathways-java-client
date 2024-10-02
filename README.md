@@ -1,4 +1,4 @@
-# wikipathways-new-api-client-java
+# wikipathways-java-client
 
 ## Introduction
 Java library for the WikiPathways web service.
