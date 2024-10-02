@@ -693,6 +693,37 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
     }
 }
 
+@Override
+public WSCommunity[] listCommunities() throws RemoteException {
+    String url = BASE_URL_JSON + "listCommunities.json";
+    List<WSCommunity> communities = new ArrayList<>();
+
+    try {
+        String jsonString = jsonGet(url);
+
+        JSONObject jsonObject = new JSONObject(jsonString);
+        JSONArray communitiesArray = jsonObject.getJSONArray("communities");
+
+        for (int i = 0; i < communitiesArray.length(); i++) {
+            JSONObject community = communitiesArray.getJSONObject(i);
+
+            String name = community.optString("display-name");
+            String title = community.optString("title");
+            String description = community.optString("short-description");
+            String tag = community.optString("community-tag");
+            String editors = community.optString("editors");
+
+            WSCommunity wsCommunity = new WSCommunity(name, title, description, tag, editors);
+            communities.add(wsCommunity);
+        }
+
+        return communities.toArray(new WSCommunity[0]);
+
+    } catch (Exception e) {
+        throw new RemoteException("Error while processing listCommunities: " + e.getMessage(), e);
+    }
+}
+
 	
 @Override
 public WSPathwayInfo[] listPathways(String organism) throws RemoteException {    

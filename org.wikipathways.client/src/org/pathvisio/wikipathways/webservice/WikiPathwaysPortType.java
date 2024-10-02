@@ -26,6 +26,7 @@ public interface WikiPathwaysPortType extends Remote {
     public WSPathwayInfo[] listPathways(String organism) throws RemoteException;
     public WSSearchResultLiterature[] findPathwaysByLiterature(String query) throws RemoteException;
     public String[] listOrganisms() throws RemoteException;
+    public WSCommunity[] listCommunities() throws RemoteException;
     public WSPathwayHistory getPathwayHistory(String pwId, String timestamp) throws RemoteException;
     public String[] getXrefList(String pwId, String code) throws RemoteException;
     public WSSearchResultText[] findPathwaysByText(String query, String species) throws RemoteException;

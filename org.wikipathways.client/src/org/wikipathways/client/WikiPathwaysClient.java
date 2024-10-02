@@ -16,12 +16,10 @@
 package org.wikipathways.client;
 
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
@@ -35,9 +33,9 @@ import org.bridgedb.DataSource;
 import org.bridgedb.Xref;
 import org.bridgedb.bio.Organism;
 import org.pathvisio.core.model.ConverterException;
-import org.pathvisio.core.model.GpmlFormat;
 import org.pathvisio.core.model.Pathway;
 import org.pathvisio.core.view.MIMShapes;
+import org.pathvisio.wikipathways.webservice.WSCommunity;
 import org.pathvisio.wikipathways.webservice.WSOntologyTerm;
 import org.pathvisio.wikipathways.webservice.WSParentOntologyTerm;
 import org.pathvisio.wikipathways.webservice.WSPathway;
@@ -152,6 +150,16 @@ public class WikiPathwaysClient {
 	public String[] listOrganisms() throws RemoteException {
 		String[] r = port.listOrganisms();
 		if(r == null) r = new String[0];
+		return r;
+	}
+
+		/**
+	 * Lists all available organisms on WikiPathways
+	 * @throws RemoteException
+	 */
+	public WSCommunity[] listCommunities() throws RemoteException {
+		WSCommunity[] r = port.listCommunities();
+		if(r == null) r = new WSCommunity[0];
 		return r;
 	}
 
