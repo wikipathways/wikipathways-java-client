@@ -21,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URLEncoder;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -33,6 +34,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.awt.Desktop;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Consts;
@@ -655,18 +657,6 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 		}
 	}
 	
-	@Override
-	public String getUserByOrcid(String orcid) throws RemoteException {
-		String url = baseUrl + "/getUserByOrcid?orcid=" + orcid;
-		try {
-			Document jdomDocument = Utils.connect(url, client);
-			Element root = jdomDocument.getRootElement();
-			
-			return root.getChildText("Result", WSNamespaces.NS1).substring(5);
-		} catch (Exception e) {
-			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
-		}
-	}
 
 	@Override
 	public String[] getXrefList(String pwId, String systemCode) throws RemoteException {
@@ -835,7 +825,29 @@ public WSPathwayInfo[] listPathways(String organism) throws RemoteException {
     }
 }
 
+ public void getPathwayHistory(String pathway) throws RemoteException {
+        if (pathway == null || pathway.isEmpty()) {
+            throw new RemoteException("Must provide a pathway identifier, e.g., WP554");
+        }
 
+        // Build the URL
+        String url = "https://github.com/wikipathways/wikipathways-database/commits/main/pathways/" + pathway;
+
+        try {
+            // Check if Desktop is supported
+            if (Desktop.isDesktopSupported()) {
+                Desktop desktop = Desktop.getDesktop();
+
+                // Open the URL in the default browser
+                desktop.browse(new URI(url));
+            } else {
+                throw new RemoteException("Desktop not supported. Unable to open URL.");
+            }
+        } catch (Exception e) {
+            throw new RemoteException("Error while opening URL: " + url, e);
+        }
+    }
+	
 	 private String jsonGet(String urlString) throws Exception {
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();

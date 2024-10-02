@@ -233,13 +233,6 @@ public class WikiPathwaysClient {
 	}
 	
 	/**
-	 * get a user name by orcid id
-	 */
-	public String getUserByOrcid(String orcid) throws RemoteException {
-		return port.getUserByOrcid(orcid);
-	}
-
-	/**
 	 * Utility method to create a pathway model from the webservice class
 	 * WSPathway.
 	 * @param wsp The WSPathway object returned by the webservice.
@@ -308,6 +301,10 @@ public class WikiPathwaysClient {
 		WSSearchResultLiterature[] r = port.findPathwaysByLiterature(query);
 		if(r == null) r = new WSSearchResultLiterature[0];
 		return r;        
+	}
+
+	public void getPathwayHistory(String wpId) throws RemoteException {
+		port.getPathwayHistory(wpId);	    
 	}
 
 }

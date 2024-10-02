@@ -15,7 +15,6 @@
 //
 package org.pathvisio.wikipathways.webservice;
 
-import java.io.ByteArrayOutputStream;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -37,5 +36,5 @@ public interface WikiPathwaysPortType extends Remote {
     public WSPathwayInfo[] getPathwaysByOntologyTerm(String term) throws RemoteException;
     public WSPathwayInfo[] getPathwaysByCommunity(String term) throws RemoteException;
     public String getCommunityByPathway(String pwId) throws RemoteException;
-    public String getUserByOrcid(String orcid) throws RemoteException;
+    public void getPathwayHistory(String pathway) throws RemoteException;
 }
