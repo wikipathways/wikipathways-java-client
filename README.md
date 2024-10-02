@@ -5,7 +5,7 @@ Java library for the WikiPathways web service.
 
 This library reimplements most of the methods from [the original WikiPathways API client](https://github.com/wikipathways/wikipathways-api-client-java).
 
-Instead of accessing the WikiPathways pathway database from Java through the REST web service API (http://webservice.wikipathways.org), we now access the database via [WikiPathways JSON API](https://www.wikipathways.org/json/) and [WikiPathways GitHub assets](https://github.com/wikipathways/wikipathways-assets) for better performance and maintainability.
+Instead of accessing the WikiPathways pathway database from Java through the REST web service API (http://webservice.wikipathways.org), the library now access the database via [WikiPathways JSON API](https://www.wikipathways.org/json/) and [WikiPathways GitHub assets](https://github.com/wikipathways/wikipathways-assets) for better performance and maintainability.
 
 It provides nearly identical functionality to [rWikiPathways](https://github.com/wikipathways/rWikiPathways), an R package in Bioconductor available to R programmers.
 
