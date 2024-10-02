@@ -99,6 +99,14 @@ public class WikiPathwaysClient {
 	public WSParentOntologyTerm [] getPathwaysByParentOntologyTerm(String term) throws RemoteException {
 		return port.getPathwaysByParentOntologyTerm(term);
 	}
+
+		/**
+	 * Get a list of pathways tagged with community tag
+	 */
+	public WSPathwayInfo [] getPathwaysByCommunity(String tag) throws RemoteException {
+		return port.getPathwaysByCommunity(tag);
+	}
+	
 	
 	/**
 	 * Get a list of pathways tagged with a given ontology term.

@@ -500,6 +500,48 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			throw new RemoteException("Error while processing ontology ID " + term + ": " + e.getMessage(), e);
 		}
 	}
+
+	@Override
+	public WSPathwayInfo[] getPathwaysByCommunity(String communityTag) throws RemoteException {
+		String url = BASE_URL_JSON + "listCommunities.json";
+		List<WSPathwayInfo> pathways = new ArrayList<>();
+	
+		try {
+			String jsonString = jsonGet(url);
+	
+			JSONObject jsonObject = new JSONObject(jsonString);
+			JSONArray communitiesArray = jsonObject.getJSONArray("communities");
+	
+			for (int i = 0; i < communitiesArray.length(); i++) {
+				JSONObject community = communitiesArray.getJSONObject(i);
+	
+				String tag = community.optString("community-tag", "");
+				if (tag.equalsIgnoreCase(communityTag)) {
+	
+					JSONArray pathwaysArray = community.getJSONArray("pathways");
+	
+					for (int j = 0; j < pathwaysArray.length(); j++) {
+						JSONObject pathway = pathwaysArray.getJSONObject(j);
+						String id = pathway.getString("id");
+						String pathwayUrl = pathway.getString("url");
+						String name = pathway.getString("name");
+						String species = pathway.getString("species");
+						String revision = pathway.getString("revision");
+	
+						WSPathwayInfo pathwayInfo = new WSPathwayInfo(id, pathwayUrl, name, species, revision);
+						pathways.add(pathwayInfo);
+					}
+	
+					break;
+				}
+			}
+	
+			return pathways.toArray(new WSPathwayInfo[0]);
+	
+		} catch (Exception e) {
+			throw new RemoteException("Error while processing community tag " + communityTag + ": " + e.getMessage(), e);
+		}
+	}
 	
 	@Override
 	public WSParentOntologyTerm[] getPathwaysByParentOntologyTerm(String parentTerm) throws RemoteException {
@@ -755,10 +797,8 @@ public WSPathwayInfo[] listPathways(String organism) throws RemoteException {
             }
         }
 
-        // Convert the list to an array and return it
         return pathwayInfoList.toArray(new WSPathwayInfo[0]);
     } catch (Exception e) {
-        // Handle exceptions and wrap them in a RemoteException
         throw new RemoteException("Error while processing listPathways: " + e.getMessage(), e);
     }
 }
@@ -778,7 +818,4 @@ public WSPathwayInfo[] listPathways(String organism) throws RemoteException {
         conn.disconnect();
         return content.toString();
     }
-
-	
-
 }

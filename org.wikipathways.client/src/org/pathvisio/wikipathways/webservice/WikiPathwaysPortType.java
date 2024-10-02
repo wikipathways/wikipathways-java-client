@@ -35,5 +35,6 @@ public interface WikiPathwaysPortType extends Remote {
     public WSPathway getPathway(String pwId, int revision) throws RemoteException;
     public WSOntologyTerm[] getOntologyTermsByPathway(String pwId) throws RemoteException;
     public WSPathwayInfo[] getPathwaysByOntologyTerm(String term) throws RemoteException;
+    public WSPathwayInfo[] getPathwaysByCommunity(String term) throws RemoteException;
     public String getUserByOrcid(String orcid) throws RemoteException;
 }
