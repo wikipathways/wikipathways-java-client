@@ -1,7 +1,7 @@
 package org.pathvisio.wikipathways.webservice;
 
 /**
- * Contains basic information about a pathway
+ * Contains full information about a pathway
  * 
  * @author yihangx
  *
