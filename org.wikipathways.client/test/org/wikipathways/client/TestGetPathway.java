@@ -16,20 +16,18 @@
 package org.wikipathways.client;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.rmi.RemoteException;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.pathvisio.core.model.ConverterException;
-import org.pathvisio.core.model.Pathway;
 import org.pathvisio.wikipathways.webservice.WSPathway;
 import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
  * JUnit Test for webservice function: getPathway
- * @author mkutmon
+ * @author yihangx
  */
 public class TestGetPathway {
 

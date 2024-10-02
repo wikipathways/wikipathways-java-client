@@ -23,20 +23,20 @@ import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
  * JUnit Test for webservice function: getPathwayHistory
+ * 
  * @author yihangx
  */
 public class TestGetPathwayHistory {
-	
-	private WikiPathwaysClient client;
-	
-	@Before
-	public void setUp() throws Exception {
-		client = ConnectionSettings.createClient();
-	}
 
-	@Test
-	public void test() throws RemoteException {
-		client.getPathwayHistory("WP554");	
-	}
+    private WikiPathwaysClient client;
+
+    @Before
+    public void setUp() throws Exception {
+        client = ConnectionSettings.createClient();
+    }
+
+    @Test
+    public void test() throws RemoteException {
+        client.getPathwayHistory("WP554");
+    }
 }
- 

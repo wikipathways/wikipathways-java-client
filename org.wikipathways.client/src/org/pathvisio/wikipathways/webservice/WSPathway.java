@@ -17,11 +17,12 @@ package org.pathvisio.wikipathways.webservice;
 
 /**
  * contains all information about a pathway
- * @author msk
+ * 
+ * @author yihangx
  *
  */
 public class WSPathway {
-	
+
     private String gpml;
     private String id;
     private String url;
@@ -29,14 +30,14 @@ public class WSPathway {
     private String species;
     private String revision;
 
-    public WSPathway( String gpml, String id, String url, String name,
-           String species, String revision) {
-    	this.gpml = gpml;
-    	this.id = id;
-    	this.url = url;
-    	this.name = name;
-    	this.species = species;
-    	this.revision = revision;
+    public WSPathway(String gpml, String id, String url, String name,
+            String species, String revision) {
+        this.gpml = gpml;
+        this.id = id;
+        this.url = url;
+        this.name = name;
+        this.species = species;
+        this.revision = revision;
     }
 
     public String getGpml() {

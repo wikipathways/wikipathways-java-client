@@ -27,12 +27,13 @@ import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
  * JUnit Test for webservice function: getOntologyTermsByPathway
- * @author mkutmon
+ * 
+ * @author yihangx
  */
 public class TestGetOntologyTermsByPathway {
 
 	private WikiPathwaysClient client;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		client = ConnectionSettings.createClient();
@@ -40,18 +41,18 @@ public class TestGetOntologyTermsByPathway {
 
 	@Test
 	public void test() throws RemoteException {
-		WSOntologyTerm [] terms = client.getOntologyTermsByPathway("WP254");
-		
+		WSOntologyTerm[] terms = client.getOntologyTermsByPathway("WP254");
+
 		boolean apoptotic = false;
 		boolean syndrome = false;
-		for(WSOntologyTerm t : terms) {
-			if(t.getName().equals("apoptotic cell death pathway")) {
+		for (WSOntologyTerm t : terms) {
+			if (t.getName().equals("apoptotic cell death pathway")) {
 				apoptotic = true;
 			} else if (t.getName().equals("syndrome")) {
 				syndrome = true;
 			}
 		}
-	
+
 		assertTrue(apoptotic);
 		assertFalse(syndrome);
 	}

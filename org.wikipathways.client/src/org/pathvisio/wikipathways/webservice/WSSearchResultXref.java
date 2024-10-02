@@ -16,8 +16,9 @@
 package org.pathvisio.wikipathways.webservice;
 
 /**
- * contains a search result from the WP webservice
- * @author msk
+ * contains a search result with external links from github repo
+ * 
+ * @author yihangx
  *
  */
 public class WSSearchResultXref {
@@ -26,8 +27,8 @@ public class WSSearchResultXref {
     private String name;
     private String species;
     private String revision;
-    private String authors;      // New field
-    private String description;  // New field
+    private String authors; // New field
+    private String description; // New field
 
     // New fields
     private String ncbigene;
@@ -38,14 +39,13 @@ public class WSSearchResultXref {
     private String chebi;
     private String inchikey;
 
-    // Default constructor
-    public WSSearchResultXref() { }
+    public WSSearchResultXref() {
+    }
 
-    // Constructor with all parameters
-    public WSSearchResultXref(String id, String url, String name, String species, String revision, 
-                          String authors, String description, 
-                          String ncbigene, String ensembl, String hgnc, String uniprot,
-                          String wikidata, String chebi, String inchikey) {
+    public WSSearchResultXref(String id, String url, String name, String species, String revision,
+            String authors, String description,
+            String ncbigene, String ensembl, String hgnc, String uniprot,
+            String wikidata, String chebi, String inchikey) {
         this.id = id;
         this.url = url;
         this.name = name;
@@ -62,7 +62,6 @@ public class WSSearchResultXref {
         this.inchikey = inchikey;
     }
 
-    // Getters and Setters for all fields
     public String getId() {
         return id;
     }

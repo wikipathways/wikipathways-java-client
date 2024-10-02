@@ -17,23 +17,24 @@ package org.pathvisio.wikipathways.webservice;
 
 /**
  * contains basic information about a pathway
- * @author msk
+ * 
+ * @author yihangx
  *
  */
 public class WSPathwayInfo {
-   
-	private String id;
+
+    private String id;
     private String url;
     private String name;
     private String species;
     private String revision;
 
     public WSPathwayInfo(String id, String url, String name, String species, String revision) {
-           this.id = id;
-           this.url = url;
-           this.name = name;
-           this.species = species;
-           this.revision = revision;
+        this.id = id;
+        this.url = url;
+        this.name = name;
+        this.species = species;
+        this.revision = revision;
     }
 
     public String getId() {
@@ -75,9 +76,9 @@ public class WSPathwayInfo {
     public void setRevision(String revision) {
         this.revision = revision;
     }
-    
+
     @Override
     public String toString() {
-		return id + ":" + revision + "\t" + name +"\t" + species + "\t" + url;
+        return id + ":" + revision + "\t" + name + "\t" + species + "\t" + url;
     }
 }

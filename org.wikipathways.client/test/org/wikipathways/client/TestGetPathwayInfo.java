@@ -26,12 +26,13 @@ import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
  * JUnit Test for webservice function: getPathwayInfo
- * @author mkutmon
+ * 
+ * @author yihangx
  */
 public class TestGetPathwayInfo {
-	
+
 	private WikiPathwaysClient client;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		client = ConnectionSettings.createClient();
@@ -40,7 +41,7 @@ public class TestGetPathwayInfo {
 	@Test
 	public void test() throws RemoteException {
 		WSPathwayInfo info = client.getPathwayInfo("WP554");
-			
+
 		assertEquals("ACE inhibitor pathway", info.getName());
 		assertEquals("Homo sapiens", info.getSpecies());
 	}

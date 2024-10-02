@@ -1,7 +1,10 @@
 package org.pathvisio.wikipathways.webservice;
 
 /**
- * Contains a search result with literature information from the WP webservice.
+ * contains a search result with literature information from github repo
+ * 
+ * @author yihangx
+ *
  */
 public class WSSearchResultLiterature {
 
@@ -15,10 +18,11 @@ public class WSSearchResultLiterature {
     private String refs;
     private String[] citations;
 
-    public WSSearchResultLiterature() { }
+    public WSSearchResultLiterature() {
+    }
 
     public WSSearchResultLiterature(String id, String url, String name, String species, String revision,
-                                    String authors, String description, String refs, String[] citations) {
+            String authors, String description, String refs, String[] citations) {
         this.id = id;
         this.url = url;
         this.name = name;
@@ -29,8 +33,6 @@ public class WSSearchResultLiterature {
         this.refs = refs;
         this.citations = citations;
     }
-
-    // Getter and Setter methods
 
     public String getId() {
         return id;

@@ -16,23 +16,24 @@
 package org.pathvisio.wikipathways.webservice;
 
 /**
- * ontology term object
- * @author msk
+ * parent ontology term object
+ * 
+ * @author yihangx
  *
  */
 public class WSParentOntologyTerm {
 
     private String wpid;
-	private String ontology;
+    private String ontology;
     private String id;
     private String name;
     private String parent;
 
     public WSParentOntologyTerm(String wpid, String ontology, String id, String name, String parent) {
         this.wpid = wpid;
-    	this.ontology = ontology;
-    	this.id = id;
-    	this.name = name;
+        this.ontology = ontology;
+        this.id = id;
+        this.name = name;
         this.parent = parent;
     }
 
@@ -43,7 +44,6 @@ public class WSParentOntologyTerm {
     public void setWpId(String wpid) {
         this.wpid = wpid;
     }
-
 
     public String getOntology() {
         return ontology;
@@ -76,10 +76,9 @@ public class WSParentOntologyTerm {
     public void setParent(String Parent) {
         this.parent = Parent;
     }
-    
-    
+
     @Override
     public String toString() {
-    	return wpid+ "\t" + name + "\t" + id + "\t" + ontology + "\t" + parent;
+        return wpid + "\t" + name + "\t" + id + "\t" + ontology + "\t" + parent;
     }
 }

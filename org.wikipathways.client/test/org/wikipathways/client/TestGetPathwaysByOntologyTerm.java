@@ -21,13 +21,12 @@ import java.rmi.RemoteException;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.pathvisio.wikipathways.webservice.WSOntologyTerm;
 import org.pathvisio.wikipathways.webservice.WSPathwayInfo;
 import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
  * JUnit Test for webservice function: getPathwaysByOntologyTerm
- * @author mkutmon
+ * @author yihangx
  */
 public class TestGetPathwaysByOntologyTerm {
 

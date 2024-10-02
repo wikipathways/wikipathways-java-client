@@ -1,5 +1,11 @@
 package org.pathvisio.wikipathways.webservice;
 
+/**
+ * contains a search result with text information from github repo
+ * 
+ * @author yihangx
+ *
+ */
 public class WSSearchResultText {
     private String id;
     private String url;
@@ -12,12 +18,11 @@ public class WSSearchResultText {
     private String annotations;
     private String citedIn;
 
-    // Default constructor
-    public WSSearchResultText() {}
+    public WSSearchResultText() {
+    }
 
-    // Parameterized constructor
     public WSSearchResultText(String id, String url, String name, String species, String revision,
-                              String authors, String description, String datanodes, String annotations, String citedIn) {
+            String authors, String description, String datanodes, String annotations, String citedIn) {
         this.id = id;
         this.url = url;
         this.name = name;
@@ -30,7 +35,6 @@ public class WSSearchResultText {
         this.citedIn = citedIn;
     }
 
-    // Getters and Setters
     public String getId() {
         return id;
     }
@@ -114,16 +118,16 @@ public class WSSearchResultText {
     @Override
     public String toString() {
         return "WSSearchResultText{" +
-               "id='" + id + '\'' +
-               ", url='" + url + '\'' +
-               ", name='" + name + '\'' +
-               ", species='" + species + '\'' +
-               ", revision='" + revision + '\'' +
-               ", authors='" + authors + '\'' +
-               ", description='" + description + '\'' +
-               ", datanodes='" + datanodes + '\'' +
-               ", annotations='" + annotations + '\'' +
-               ", citedIn='" + citedIn + '\'' +
-               '}';
+                "id='" + id + '\'' +
+                ", url='" + url + '\'' +
+                ", name='" + name + '\'' +
+                ", species='" + species + '\'' +
+                ", revision='" + revision + '\'' +
+                ", authors='" + authors + '\'' +
+                ", description='" + description + '\'' +
+                ", datanodes='" + datanodes + '\'' +
+                ", annotations='" + annotations + '\'' +
+                ", citedIn='" + citedIn + '\'' +
+                '}';
     }
 }

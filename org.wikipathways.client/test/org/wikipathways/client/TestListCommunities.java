@@ -25,21 +25,21 @@ import org.wikipathways.client.test.utils.ConnectionSettings;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-
 /**
  * JUnit Test for webservice function: listCommunities
+ * 
  * @author yihangx
  */
 public class TestListCommunities {
 
-	private WikiPathwaysClient client;
-	
-	@Before
-	public void setUp() throws Exception {
-		client = ConnectionSettings.createClient();
-	}
+    private WikiPathwaysClient client;
 
-	@Test
+    @Before
+    public void setUp() throws Exception {
+        client = ConnectionSettings.createClient();
+    }
+
+    @Test
     public void testListCommunities() throws RemoteException {
         WSCommunity[] communities = client.listCommunities();
         assertTrue(communities.length > 0);

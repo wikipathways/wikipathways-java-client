@@ -29,8 +29,8 @@ import org.junit.Test;
 import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
- * JUnit Test for webservice function: xrefList
- * @author mkutmon
+ * JUnit Test for webservice function: getXrefList
+ * @author yihangx
  */
 public class TestGetXrefList {
 

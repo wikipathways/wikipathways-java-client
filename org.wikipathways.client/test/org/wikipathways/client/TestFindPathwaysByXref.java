@@ -29,34 +29,36 @@ import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
  * JUnit Test for webservice function: findPathwaysByXref
- * @author mkutmon
+ * 
+ * @author yihangx
  */
 public class TestFindPathwaysByXref {
 
 	private WikiPathwaysClient client;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		client = ConnectionSettings.createClient();
-		if (!DataSource.systemCodeExists("S")) DataSourceTxt.init();
+		if (!DataSource.systemCodeExists("S"))
+			DataSourceTxt.init();
 	}
 
 	@Test
 	public void testSingleXref() throws RemoteException {
 		Xref x = new Xref("1234", DataSource.getExistingBySystemCode("L"));
-		WSSearchResultXref [] result = client.findPathwaysByXref(x);
+		WSSearchResultXref[] result = client.findPathwaysByXref(x);
 		assertTrue(result.length > 0);
-		
+
 		Xref x2 = new Xref("ABC", DataSource.getExistingBySystemCode("L"));
-		WSSearchResultXref [] result2 = client.findPathwaysByXref(x2);
+		WSSearchResultXref[] result2 = client.findPathwaysByXref(x2);
 		assertTrue(result2.length == 0);
 	}
-	
+
 	@Test
 	public void testMultiXref() throws RemoteException {
 		Xref x = new Xref("1234", DataSource.getExistingBySystemCode("L"));
 		Xref x2 = new Xref("ENSG00000130164", DataSource.getExistingBySystemCode("En"));
-		WSSearchResultXref [] result = client.findPathwaysByXref(x, x2);
+		WSSearchResultXref[] result = client.findPathwaysByXref(x, x2);
 		assertTrue(result.length > 0);
 	}
 }

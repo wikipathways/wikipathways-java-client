@@ -29,12 +29,13 @@ import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
  * JUnit Test for webservice function: listPathways
- * @author mkutmon
+ * 
+ * @author yihangx
  */
 public class TestListPathways {
 
 	private WikiPathwaysClient client;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		client = ConnectionSettings.createClient();
@@ -42,10 +43,10 @@ public class TestListPathways {
 
 	@Test
 	public void test() throws RemoteException {
-		WSPathwayInfo [] info = client.listPathways();
+		WSPathwayInfo[] info = client.listPathways();
 		assertTrue(info.length > 1900);
-			
-		WSPathwayInfo [] info2 = client.listPathways(Organism.HomoSapiens);
+
+		WSPathwayInfo[] info2 = client.listPathways(Organism.HomoSapiens);
 		assertTrue(info2.length < info.length);
 		assertFalse(info.length == info2.length);
 	}

@@ -28,12 +28,13 @@ import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
  * JUnit Test for webservice function: listOrganism
- * @author mkutmon
+ * 
+ * @author yihangx
  */
 public class TestListOrganisms {
 
 	private WikiPathwaysClient client;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		client = ConnectionSettings.createClient();
@@ -41,9 +42,9 @@ public class TestListOrganisms {
 
 	@Test
 	public void test() throws RemoteException {
-		String [] orgs = client.listOrganisms();
+		String[] orgs = client.listOrganisms();
 		assertTrue(orgs.length >= 27);
-			
+
 		List<String> list = new ArrayList<String>(Arrays.asList(orgs));
 		assertTrue(list.contains("Homo sapiens"));
 	}

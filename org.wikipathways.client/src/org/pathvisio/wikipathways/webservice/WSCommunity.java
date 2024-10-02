@@ -16,8 +16,8 @@
 package org.pathvisio.wikipathways.webservice;
 
 /**
- * ontology term object
- * @author msk
+ * community object
+ * @author yihangx
  *
  */
 public class WSCommunity {

@@ -29,7 +29,7 @@ import org.pathvisio.wikipathways.webservice.WSPathwayInfo;
 import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
- * JUnit Test for webservice function: getPathwaysByOntologyTerm
+ * JUnit Test for webservice function: getPathwaysByCommunity
  * @author yihangx
  */
 public class TestGetPathwaysByCommunity {

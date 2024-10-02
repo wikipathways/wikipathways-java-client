@@ -27,12 +27,13 @@ import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
  * JUnit Test for webservice function: findPathwaysByText
- * @author mkutmon
+ * 
+ * @author yihangx
  */
 public class TestFindPathwaysByText {
 
 	private WikiPathwaysClient client;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		client = ConnectionSettings.createClient();
@@ -41,10 +42,10 @@ public class TestFindPathwaysByText {
 	@Test
 	public void test() throws RemoteException {
 		String query = "apoptosis";
-		WSSearchResultText [] results = client.findPathwaysByText(query);
+		WSSearchResultText[] results = client.findPathwaysByText(query);
 		boolean found = false;
-		for(WSSearchResultText res : results) {
-			if(res.getId().equals("WP254")) {
+		for (WSSearchResultText res : results) {
+			if (res.getId().equals("WP254")) {
 				found = true;
 			}
 		}
@@ -53,17 +54,17 @@ public class TestFindPathwaysByText {
 
 	@Test
 	public void testOrg() throws RemoteException {
-    	String query = "apoptosis";
-    
-    	WSSearchResultText[] results = client.findPathwaysByText(query, "species");
-    
-    	boolean found = false;
-    	for(WSSearchResultText res : results) {
-        	if(res.getId().equals("WP254")) {
-            	found = true;
-        	}
-    	}
-    	assertFalse(found);
+		String query = "apoptosis";
+
+		WSSearchResultText[] results = client.findPathwaysByText(query, "species");
+
+		boolean found = false;
+		for (WSSearchResultText res : results) {
+			if (res.getId().equals("WP254")) {
+				found = true;
+			}
+		}
+		assertFalse(found);
 	}
 
 }

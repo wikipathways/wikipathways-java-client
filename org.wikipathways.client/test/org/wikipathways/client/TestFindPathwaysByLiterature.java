@@ -21,18 +21,18 @@ import java.rmi.RemoteException;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.pathvisio.wikipathways.webservice.WSSearchResult;
 import org.pathvisio.wikipathways.webservice.WSSearchResultLiterature;
 import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
  * JUnit Test for webservice function: findPathwaysByLiterature
- * @author mkutmon
+ * 
+ * @author yihangx
  */
 public class TestFindPathwaysByLiterature {
 
 	private WikiPathwaysClient client;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		client = ConnectionSettings.createClient();
@@ -43,13 +43,13 @@ public class TestFindPathwaysByLiterature {
 		String query = "15134803";
 		WSSearchResultLiterature[] res = client.findPathwaysByLiterature(query);
 		boolean found = false;
-		
+
 		for (WSSearchResultLiterature r : res) {
 			if (r.getId().equals("WP4756")) {
 				found = true;
 			}
 		}
-		
+
 		assertTrue(found);
 	}
 }

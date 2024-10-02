@@ -20,21 +20,34 @@ import java.rmi.RemoteException;
 
 public interface WikiPathwaysPortType extends Remote {
     public WSSearchResultXref[] findPathwaysByXref(String[] ids, String[] codes) throws RemoteException;
+
     public WSParentOntologyTerm[] getPathwaysByParentOntologyTerm(String term) throws RemoteException;
+
     public WSPathwayInfo getPathwayInfo(String pwId) throws RemoteException;
+
     public WSPathwayInfo[] listPathways(String organism) throws RemoteException;
+
     public WSSearchResultLiterature[] findPathwaysByLiterature(String query) throws RemoteException;
+
     public String[] listOrganisms() throws RemoteException;
+
     public WSCommunity[] listCommunities() throws RemoteException;
-    public WSPathwayHistory getPathwayHistory(String pwId, String timestamp) throws RemoteException;
+
     public String[] getXrefList(String pwId, String code) throws RemoteException;
+
     public WSSearchResultText[] findPathwaysByText(String query, String species) throws RemoteException;
+
     public byte[] getPathwayAs(String fileType, String pwId) throws RemoteException;
-    public WSSearchResult[] findInteractions(String query) throws RemoteException;
+
     public WSPathway getPathway(String pwId, int revision) throws RemoteException;
+
     public WSOntologyTerm[] getOntologyTermsByPathway(String pwId) throws RemoteException;
+
     public WSPathwayInfo[] getPathwaysByOntologyTerm(String term) throws RemoteException;
+
     public WSPathwayInfo[] getPathwaysByCommunity(String term) throws RemoteException;
+
     public String getCommunityByPathway(String pwId) throws RemoteException;
+
     public void getPathwayHistory(String pathway) throws RemoteException;
 }

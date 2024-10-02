@@ -23,13 +23,14 @@ import org.junit.Test;
 import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
- * JUnit Test for webservice function: savePathwayAs
- * @author mkutmon
+ * JUnit Test for webservice function: downloadPathwayAs
+ * 
+ * @author yihangx
  */
 public class TestDownloadPathwayAs {
 
 	WikiPathwaysClient client;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		client = ConnectionSettings.createClient();
@@ -41,17 +42,17 @@ public class TestDownloadPathwayAs {
 	public void testPng() throws IOException {
 		client.downloadPathwayAs(new File("resources/test/output.png"), "png", "WP1");
 	}
-	
+
 	@Test
 	public void testGpml() throws IOException {
 		client.downloadPathwayAs(new File("resources/test/output.gpml"), "gpml", "WP1");
 	}
-	
+
 	@Test
 	public void testSvg() throws IOException {
 		client.downloadPathwayAs(new File("resources/test/output.svg"), "svg", "WP1");
 	}
-	
+
 	@Test
 	public void testJson() throws IOException {
 		client.downloadPathwayAs(new File("resources/test/output.json"), "json", "WP1");

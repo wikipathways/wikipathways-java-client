@@ -26,7 +26,7 @@ import org.wikipathways.client.test.utils.ConnectionSettings;
 
 /**
  * JUnit Test for webservice function: getPathwaysByParentOntologyTerm
- * @author mkutmon
+ * @author yihangx
  */
 public class TestGetPathwaysByParentOntologyTerm {
 
