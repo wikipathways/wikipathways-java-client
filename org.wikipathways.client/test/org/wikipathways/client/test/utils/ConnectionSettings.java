@@ -15,16 +15,12 @@
 //
 package org.wikipathways.client.test.utils;
 
-import java.net.URL;
-
 import org.wikipathways.client.WikiPathwaysClient;
 
 public class ConnectionSettings {
 
 	public static WikiPathwaysClient createClient() throws Exception {
-		URL url = new URL(
-		  System.getProperty("wp.webserver", "https://webservice.wikipathways.org")
-        );
-		return new WikiPathwaysClient(url);
+	
+		return new WikiPathwaysClient();
 	}
 }

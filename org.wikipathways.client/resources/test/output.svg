@@ -680,7 +680,7 @@
         <path style="color:inherit;fill:inherit;fill-opacity:inherit;stroke:inherit;stroke-width:inherit" id="ide734686c-path" d="M545.380952380953,238.9523809523805L521.3999999999995,249.89999999999992" marker-end="url(#markerEndArrow)" class="EdgeBody"/>
       </g>
     </g>
-    <a id="c66" class="SingleFreeNode DataNode ChEBI_CHEBI_17855 Metabolite CompactIdentifier_chebi_17855 Triglycerides Wikidata_Q186319 ChEBI_17855" color="#000000" name="Triglycerides" transform="translate(554.5,170.33333333333334)" xlink:href="https://bioregistry.io/chebi:17855" target="_blank">
+    <a id="c66" class="SingleFreeNode DataNode ChEBI_CHEBI_17855 Metabolite CompactIdentifier_chebi_17855 Triglycerides Wikidata_Q186319 ChEBI_17855 KEGG_C00422 LipidMaps_LMGL0301 LipidMaps_LMGL03010000" color="#000000" name="Triglycerides" transform="translate(554.5,170.33333333333334)" xlink:href="https://bioregistry.io/chebi:17855" target="_blank">
       <use fill="transparent" fill-opacity="0" stroke="#000000" stroke-width="0" height="19px" id="c66-icon" width="104.33333333333333px" x="0" y="0" xlink:href="#none" transform="matrix(1, 0, 0, 1, 0, 0)" class="Icon"/>
       <text id="c66-text" class="Text" direction="ltr" fill="#000000" font-family="'Liberation Sans', Arial, sans-serif" font-size="12px" font-style="normal" font-weight="bold" stroke="white" stroke-width="0px" text-anchor="middle" transform="translate(52.166666666666664,13.5)">
         <tspan x="0" y="0">Triglycerides</tspan>
@@ -692,7 +692,7 @@
         <tspan x="0" y="0">Liver cell</tspan>
       </text>
     </g>
-    <a id="d24" class="SingleFreeNode DataNode ChEBI_CHEBI_16247 Metabolite CompactIdentifier_chebi_16247 Phospholipid Wikidata_Q186915 ChEBI_16247" color="#000000" name="Phospholipid" transform="translate(554.5,138)" xlink:href="https://bioregistry.io/chebi:16247" target="_blank">
+    <a id="d24" class="SingleFreeNode DataNode ChEBI_CHEBI_16247 Metabolite CompactIdentifier_chebi_16247 Phospholipid Wikidata_Q186915 ChEBI_16247 KEGG_C00865" color="#000000" name="Phospholipid" transform="translate(554.5,138)" xlink:href="https://bioregistry.io/chebi:16247" target="_blank">
       <use fill="transparent" fill-opacity="0" stroke="#000000" stroke-width="0" height="19.000000000000014px" id="d24-icon" width="104.33333333333337px" x="0" y="0" xlink:href="#none" transform="matrix(1, 0, 0, 1, 0, 0)" class="Icon"/>
       <text id="d24-text" class="Text" direction="ltr" fill="#000000" font-family="'Liberation Sans', Arial, sans-serif" font-size="12px" font-style="normal" font-weight="bold" stroke="white" stroke-width="0px" text-anchor="middle" transform="translate(52.166666666666686,13.500000000000007)">
         <tspan x="0" y="0">Phospholipid</tspan>
@@ -704,7 +704,7 @@
         <tspan x="0" y="0">IDL</tspan>
       </text>
     </g>
-    <a id="fa9" class="SingleFreeNode DataNode ChEBI_CHEBI_35366 Metabolite CompactIdentifier_chebi_35366 Fatty_acid Wikidata_Q61476 ChEBI_35366" color="#000000" name="Fatty acid" transform="translate(395.14940123275045,93.97359141038902)" xlink:href="https://bioregistry.io/chebi:35366" target="_blank">
+    <a id="fa9" class="SingleFreeNode DataNode ChEBI_CHEBI_35366 Metabolite CompactIdentifier_chebi_35366 Fatty_acid Wikidata_Q61476 ChEBI_35366 KEGG_C00162 LipidMaps_LMFA01010000" color="#000000" name="Fatty acid" transform="translate(395.14940123275045,93.97359141038902)" xlink:href="https://bioregistry.io/chebi:35366" target="_blank">
       <use fill="transparent" fill-opacity="0" stroke="#000000" stroke-width="0" height="19px" id="fa9-icon" width="64.33333333333333px" x="0" y="0" xlink:href="#none" transform="matrix(1, 0, 0, 1, 0, 0)" class="Icon"/>
       <text id="fa9-text" class="Text" direction="ltr" fill="#000000" font-family="'Liberation Sans', Arial, sans-serif" font-size="12px" font-style="normal" font-weight="bold" stroke="white" stroke-width="0px" text-anchor="middle" transform="translate(32.166666666666664,13.5)">
         <tspan x="0" y="0">Fatty acid</tspan>
@@ -746,7 +746,7 @@
         <tspan x="0" y="0">VLDL</tspan>
       </text>
     </g>
-    <a id="a24b2" class="SingleFreeNode DataNode ChEBI_CHEBI_17002 Metabolite CompactIdentifier_chebi_17002 Cholesterol_ester Wikidata_Q415555 ChEBI_17002" color="#0000ff" name="Cholesterol ester" transform="translate(397,193.50000000000003)" xlink:href="https://bioregistry.io/chebi:17002" target="_blank">
+    <a id="a24b2" class="SingleFreeNode DataNode ChEBI_CHEBI_17002 Metabolite CompactIdentifier_chebi_17002 Cholesterol_ester Wikidata_Q415555 ChEBI_17002 KEGG_C02530 LipidMaps_LMST01020000" color="#0000ff" name="Cholesterol ester" transform="translate(397,193.50000000000003)" xlink:href="https://bioregistry.io/chebi:17002" target="_blank">
       <rect fill="#ffffff" stroke="#0000ff" stroke-width="1" fill-opacity="1" height="20px" id="a24b2-icon" width="124px" x="0" y="0" transform="matrix(0.992, 0, 0, 0.9523809523809523, 0.4960000000000022, 0.4761904761904763)" class="Icon"/>
       <text id="a24b2-text" class="Text" direction="ltr" fill="#0000ff" font-family="'Liberation Sans', Arial, sans-serif" font-size="12px" font-style="normal" font-weight="normal" stroke="white" stroke-width="0px" text-anchor="middle" transform="translate(62,14)">
         <tspan x="0" y="0">Cholesterol ester</tspan>
@@ -764,7 +764,7 @@
         <tspan x="0" y="0">Lipc</tspan>
       </text>
     </a>
-    <a id="afd21" class="SingleFreeNode DataNode HMDB_HMDB0000067 Metabolite CompactIdentifier_hmdb_HMDB0000067 Cholesterol ChEBI_16113 InChI_HVYWMOMLDIMFJA-DPAQBDIFSA-N" color="#0000ff" name="Cholesterol" transform="translate(132.5,524.5)" xlink:href="https://bioregistry.io/hmdb:HMDB0000067" target="_blank">
+    <a id="afd21" class="SingleFreeNode DataNode HMDB_HMDB0000067 Metabolite CompactIdentifier_hmdb_HMDB0000067 Cholesterol ChEBI_16113 InChI_HVYWMOMLDIMFJA-DPAQBDIFSA-N PubChem_5997 KEGG_C00187" color="#0000ff" name="Cholesterol" transform="translate(132.5,524.5)" xlink:href="https://bioregistry.io/hmdb:HMDB0000067" target="_blank">
       <rect fill="#ffffff" stroke="#0000ff" stroke-width="1" fill-opacity="1" height="20px" id="afd21-icon" width="80px" x="0" y="0" transform="matrix(0.9876543209876543, 0, 0, 0.9523809523809523, 0.49382716049382935, 0.4761904761904763)" class="Icon"/>
       <text id="afd21-text" class="Text" direction="ltr" fill="#0000ff" font-family="'Liberation Sans', Arial, sans-serif" font-size="12px" font-style="normal" font-weight="normal" stroke="white" stroke-width="0px" text-anchor="middle" transform="translate(40,14)">
         <tspan x="0" y="0">Cholesterol</tspan>
@@ -782,7 +782,7 @@
         <tspan x="0" y="0">Apoa4</tspan>
       </text>
     </a>
-    <a id="ba3f8" class="SingleFreeNode DataNode HMDB_HMDB0000067 Metabolite CompactIdentifier_hmdb_HMDB0000067 Cholesterol ChEBI_16113 InChI_HVYWMOMLDIMFJA-DPAQBDIFSA-N" color="#0000ff" name="Cholesterol" transform="translate(210,193.5)" xlink:href="https://bioregistry.io/hmdb:HMDB0000067" target="_blank">
+    <a id="ba3f8" class="SingleFreeNode DataNode HMDB_HMDB0000067 Metabolite CompactIdentifier_hmdb_HMDB0000067 Cholesterol ChEBI_16113 InChI_HVYWMOMLDIMFJA-DPAQBDIFSA-N PubChem_5997 KEGG_C00187" color="#0000ff" name="Cholesterol" transform="translate(210,193.5)" xlink:href="https://bioregistry.io/hmdb:HMDB0000067" target="_blank">
       <rect fill="#ffffff" stroke="#0000ff" stroke-width="1" fill-opacity="1" height="20px" id="ba3f8-icon" width="124px" x="0" y="0" transform="matrix(0.992, 0, 0, 0.9523809523809523, 0.4960000000000022, 0.4761904761904763)" class="Icon"/>
       <text id="ba3f8-text" class="Text" direction="ltr" fill="#0000ff" font-family="'Liberation Sans', Arial, sans-serif" font-size="12px" font-style="normal" font-weight="normal" stroke="white" stroke-width="0px" text-anchor="middle" transform="translate(62,14)">
         <tspan x="0" y="0">Cholesterol</tspan>
@@ -854,13 +854,13 @@
         <tspan x="0" y="0">Soat1</tspan>
       </text>
     </a>
-    <a id="ecd6d" class="SingleFreeNode DataNode HMDB_HMDB0000619 Metabolite CompactIdentifier_hmdb_HMDB0000619 Cholic_acid ChEBI_16359 InChI_BHQCQFFYRZLCQQ-OELDTZBJSA-N" color="#0000ff" name="Cholic acid" transform="translate(209,78)" xlink:href="https://bioregistry.io/hmdb:HMDB0000619" target="_blank">
+    <a id="ecd6d" class="SingleFreeNode DataNode HMDB_HMDB0000619 Metabolite CompactIdentifier_hmdb_HMDB0000619 Cholic_acid ChEBI_16359 InChI_BHQCQFFYRZLCQQ-OELDTZBJSA-N PubChem_221493 ChemSpider_192176 KEGG_C00695" color="#0000ff" name="Cholic acid" transform="translate(209,78)" xlink:href="https://bioregistry.io/hmdb:HMDB0000619" target="_blank">
       <rect fill="#ffffff" stroke="#0000ff" stroke-width="1" fill-opacity="1" height="20px" id="ecd6d-icon" width="124px" x="0" y="0" transform="matrix(0.992, 0, 0, 0.9523809523809523, 0.4960000000000022, 0.4761904761904763)" class="Icon"/>
       <text id="ecd6d-text" class="Text" direction="ltr" fill="#0000ff" font-family="'Liberation Sans', Arial, sans-serif" font-size="12px" font-style="normal" font-weight="normal" stroke="white" stroke-width="0px" text-anchor="middle" transform="translate(62,14)">
         <tspan x="0" y="0">Cholic acid</tspan>
       </text>
     </a>
-    <a id="f6a60" class="SingleFreeNode DataNode HMDB_HMDB0001206 Metabolite CompactIdentifier_hmdb_HMDB0001206 Acetyl-CoA ChEBI_15351 InChI_ZSLZBFCDCINBPY-ZSJPKINUSA-N" color="#0000ff" name="Acetyl-CoA" transform="translate(55.07717750826919,193.5)" xlink:href="https://bioregistry.io/hmdb:HMDB0001206" target="_blank">
+    <a id="f6a60" class="SingleFreeNode DataNode HMDB_HMDB0001206 Metabolite CompactIdentifier_hmdb_HMDB0001206 Acetyl-CoA ChEBI_15351 InChI_ZSLZBFCDCINBPY-ZSJPKINUSA-N PubChem_444493 ChemSpider_392413 KEGG_C00024" color="#0000ff" name="Acetyl-CoA" transform="translate(55.07717750826919,193.5)" xlink:href="https://bioregistry.io/hmdb:HMDB0001206" target="_blank">
       <rect fill="#ffffff" stroke="#0000ff" stroke-width="1" fill-opacity="1" height="20px" id="f6a60-icon" width="80px" x="0" y="0" transform="matrix(0.9876543209876543, 0, 0, 0.9523809523809523, 0.49382716049382935, 0.4761904761904763)" class="Icon"/>
       <text id="f6a60-text" class="Text" direction="ltr" fill="#0000ff" font-family="'Liberation Sans', Arial, sans-serif" font-size="12px" font-style="normal" font-weight="normal" stroke="white" stroke-width="0px" text-anchor="middle" transform="translate(40,14)">
         <tspan x="0" y="0">Acetyl-CoA</tspan>

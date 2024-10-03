@@ -55,13 +55,11 @@ import org.json.JSONObject;
 public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 
 	private HttpClient client;
-	private String baseUrl;
 	private String BASE_URL_JSON = "https://www.wikipathways.org/json/";
 	private String BASE_ASSETS = "https://www.wikipathways.org/wikipathways-assets/pathways/";
 
-	public WikiPathwaysRESTBindingStub(HttpClient client, String baseUrl) {
+	public WikiPathwaysRESTBindingStub(HttpClient client) {
 		this.client = client;
-		this.baseUrl = baseUrl;
 	}
 
 	@Override

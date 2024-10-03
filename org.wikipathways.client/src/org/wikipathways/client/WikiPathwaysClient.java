@@ -59,10 +59,9 @@ public class WikiPathwaysClient {
 	/**
 	 * Create an instance of this class.
 	 * 
-	 * @param portAddress The url that points to the WikiPathways webservice.
 	 * @throws ServiceException
 	 */
-	public WikiPathwaysClient(URL portAddress) {
+	public WikiPathwaysClient() {
 		MIMShapes.registerShapes();
 
 		HttpClientBuilder builder = HttpClientBuilder.create();
@@ -75,7 +74,7 @@ public class WikiPathwaysClient {
 			}
 			builder.setConnectionManagerShared(true);
 			try (CloseableHttpClient httpclient = builder.build()) {
-				port = new WikiPathwaysRESTBindingStub(httpclient, portAddress.toString());
+				port = new WikiPathwaysRESTBindingStub(httpclient);
 			}
 		} catch (Exception exception) {
 			System.out.println("ERROR while creating a HTTP client: " + exception.getMessage());
